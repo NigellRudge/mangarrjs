@@ -1,0 +1,165 @@
+{
+  "mangas": [
+    {
+    "title": {
+      "title": "The Seven Deadly Sins: Four Knights of the Apocalypse",
+      "originalTitle": "Mokushiroku no Yonkishi"
+    },
+    "publishInfo": {
+      "year": "2021"
+    },
+    "type": "Manga",
+    "status": "ongoing",
+    "synopsis": "Percival, a kind boy, lives with his grandfather in a remote place called \"God's Finger. However, the world will not allow him to live in peace. An encounter with a mysterious knight changes their fate, and a shocking secret is revealed.The boy sets out on an endless journey.Whether you know \"The Seven Deadly Sins\" or not, you can still enjoy it! The world's most awaited adventure fantasy!",
+    "author": {
+      "name": "Nakaba Suzuki"
+    },
+    "chapters": 33,
+    "publisher": {
+      "name": "Kodansha"
+    },
+    "country": "japan",
+    "coverImage": "https://cdn.myanimelist.net/images/anime/1192/123739l.jpg",
+    "media": [
+      "https://cdn.myanimelist.net/images/anime/1740/138361l.jpg",
+      "https://cdn.myanimelist.net/images/anime/1733/146766l.jpg"
+    ],
+    "bannerImage": "https://images5.alphacoders.com/126/thumb-1920-1262882.jpg",
+    "genres": [
+      { "name": "Action" },
+      {"name": "Adventure" },
+      {"name": "Fantasy" },
+      {"name": "Shounen" },
+      {"name": "Supernatural" }
+    ],
+    "tags": ["magic", "action", "demons", "comedy", "fantasy", "supernatural"],
+    "language": "english",
+    "downloadStatus": 70,
+      "rating": 4.5
+    },
+    {
+      "title": {
+        "title": "Kagurabachi",
+        "originalTitle": "Kagurabachi"
+      },
+      "publishInfo": {
+        "day": 18,
+        "month": "september",
+        "year": "2023"
+      },
+      "author": {
+        "name": "Takeru Hokazono"
+      },
+      "chapters": 12,
+      "publisher": {},
+      "country": "japan",
+      "status": "ongoing",
+      "coverImage": "https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx169355-5pqzh1Wb4NOQ.png",
+      "bannerImage": "https://images5.alphacoders.com/126/thumb-1920-1262882.jpg",
+      "synopsis": "Young Chihiro spends his days training under his famous swordsmith father. One day he hopes to become a great sword-maker himself. The goofy father and the serious son--they thought these days would last forever. But suddenly, tragedy strikes. A dark day soaked in blood. Chihiro and his blade now live only for revenge.",
+      "genres": [
+        {
+          "name": "Action"
+        },
+        {
+          "name": "Drama"
+        },
+        {
+          "name": "Fantasy"
+        }
+      ],
+      "media": [],
+      "type": "Manga",
+      "language": "english","downloadStatus": 50,
+      "tags": ["magic", "action", "demons", "comedy", "fantasy", "supernatural"],
+      "rating": 4.5
+    },
+    {
+      "title": {
+        "title": "Jujutsu Kaisen",
+        "originalTitle": "Jujutsu Kaisen",
+        "synonyms": [
+          "Sorcery Fight",
+          "Guerra de Hechiceros",
+          "Batalha de Feiticeiros",
+          "JJK"
+        ]
+      },
+      "publishInfo": {
+        "day": 5,
+        "month": "march",
+        "year": "2018"
+      },
+      "author": {
+        "name": "Gege Akutami"
+      },
+      "chapters": 1,
+      "publisher": {},
+      "country": "japan",
+      "status": "finished",
+      "coverImage": "https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx101517-H3TdM3g5ZUe9.jpg",
+      "bannerImage": "https://images5.alphacoders.com/126/thumb-1920-1262882.jpg",
+      "synopsis": "Although Yuji Itadori looks like your average teenager, his immense physical strength is something to behold! Every sports club wants him to join, but Itadori would rather hang out with the school outcasts in the Occult Research Club. One day, the club manages to get their hands on a sealed cursed object. Little do they know the terror they’ll unleash when they break the seal",
+      "genres": [
+        {
+          "name": "Action"
+        },
+        {
+          "name": "Drama"
+        },
+        {
+          "name": "Supernatural"
+        }
+      ],
+      "media": [],
+      "type": "Manga",
+      "language": "english"
+      ,"downloadStatus": 100,
+      "tags": ["magic", "action", "demons", "comedy", "fantasy", "supernatural"],
+      "rating": 4.5
+    },
+    {
+      "title": {
+        "title": "Jujutsu Kaisen",
+        "originalTitle": "Jujutsu Kaisen",
+        "synonyms": [
+          "Sorcery Fight",
+          "Guerra de Hechiceros",
+          "Batalha de Feiticeiros",
+          "JJK"
+        ]
+      },
+      "publishInfo": {
+        "day": 5,
+        "month": "march",
+        "year": "2018"
+      },
+      "author": {
+        "name": "Gege Akutami"
+      },
+      "chapters": 200,
+      "publisher": {},
+      "country": "japan",
+      "status": "ongoing",
+      "coverImage": "https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx169355-5pqzh1Wb4NOQ.png",
+      "bannerImage": "https://images5.alphacoders.com/126/thumb-1920-1262882.jpg",
+      "synopsis": "Although Yuji Itadori looks like your average teenager, his immense physical strength is something to behold! Every sports club wants him to join, but Itadori would rather hang out with the school outcasts in the Occult Research Club. One day, the club manages to get their hands on a sealed cursed object. Little do they know the terror they’ll unleash when they break the seal",
+      "genres": [
+        {
+          "name": "Action"
+        },
+        {
+          "name": "Drama"
+        },
+        {
+          "name": "Supernatural"
+        }
+      ],
+      "media": [],
+      "type": "Manga",
+      "language": "english","downloadStatus": 10,
+      "tags": ["magic", "action", "demons", "comedy", "fantasy", "supernatural"],
+      "rating": 4.5
+    }
+  ]
+}

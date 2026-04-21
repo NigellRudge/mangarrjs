@@ -1,0 +1,27 @@
+<svg width="340" height="110" viewBox="0 0 340 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Energy circle (white) -->
+    <circle cx="70" cy="55" r="28" fill="#FFFFFF"/>
+
+    <!-- Thicker Stylized M -->
+    <path d="M40 75 L40 35 L60 60 L80 35 L80 75"
+          stroke="#F59E0B"
+          style="stroke: oklch(73.375% 0.165 35.353);"
+          stroke-width="9"
+          stroke-linejoin="miter"
+          stroke-linecap="square"/>
+
+    <!-- Title (pure white) -->
+    <text x="110" y="62"
+          font-family="Impact, Arial Black, sans-serif"
+          font-size="30"
+          letter-spacing="1.5"
+          fill="#FFFFFF">
+        MangarrNext
+    </text>
+
+    <!-- Underline (white) -->
+    <line x1="110" y1="75" x2="300" y2="75"
+          stroke="#FFFFFF"
+          stroke-width="3"/>
+</svg>

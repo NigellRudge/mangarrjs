@@ -1,0 +1,136 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes dropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(-8deg); }
+  30%  { transform: rotate(8deg); }
+  45%  { transform: rotate(-6deg); }
+  60%  { transform: rotate(6deg); }
+  75%  { transform: rotate(-3deg); }
+  90%  { transform: rotate(3deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes iconBounce {
+  0%   { transform: translateY(0); }
+  30%  { transform: translateY(-6px); }
+  60%  { transform: translateY(2px); }
+  80%  { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+
+@keyframes lightningPulse {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scale(1.15) rotate(-6deg);
+    filter: brightness(1.6);
+  }
+  50% {
+    transform: scale(1.1) rotate(6deg);
+    filter: brightness(1.3);
+  }
+  75% {
+    transform: scale(1.05) rotate(-3deg);
+    filter: brightness(1.15);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1);
+  }
+}
+
+.animate-pulse {
+  display: inline-block; /* required for transform */
+  animation: lightningPulse 0.35s cubic-bezier(.4,0,.2,1);
+  transform-origin: center;
+}
+
+.animate-bounce{
+  display: inline-block; /* important for transform */
+  animation: iconBounce 0.4s ease-out;
+}
+
+.animate-appear {
+  animation: appear 180ms ease-out forwards;
+}
+
+.animate-fadein {
+  animation: fadein 180ms ease-out forwards;
+}
+.animate-dropdown {
+  animation: dropdown 180ms ease-out forwards;
+}
+
+.animate-shake {
+  animation: shake 350ms cubic-bezier(.36,.07,.19,.97) forwards;
+}
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: calc(100% + env(safe-area-inset-top));
+}
+
+body {
+  background: var(--color-base-100);
+  color: var(--foreground);
+  font-family: Inter, Arial, Helvetica, sans-serif;
+}

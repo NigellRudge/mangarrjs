@@ -1,0 +1,50 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@api/*": ["*"],
+      "@controllers/*": ["controllers/*"],
+      "@services/*": ["services/*"],
+      "@iocContainer/*": ["ioc-container/*"],
+      "@routes/*": ["routes/*"],
+      "@middleware/*": ["middleware/*"],
+      "@database/*": ["database/*"],
+      "@errors/*": ["errors/*"],
+      "@configs/*": ["configs/*"],
+      "@mangaClients/*": ["http/manga-clients/*"],
+      "@decorators/*": ["decorators/*"],
+      "@utils/*": ["utils/*"],
+      "@graphQL/*": ["http/graphql/*"],
+      "@http/*": ["http/*"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
