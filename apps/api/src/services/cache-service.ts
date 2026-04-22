@@ -4,7 +4,7 @@ import Injectable from "@decorators/injectable";
 import { LRUCache } from "lru-cache";
 
 const DEFAULT_TTL = parseInt(process.env.REDIS_CAHE_EXPIRATION || "60");
-const disableRedis = true; // process.env.DISABLE_REDIS === "true";
+const disableRedis = process.env.DISABLE_REDIS === "true";
 
 type TTLString = `${number}${"m" | "h" | "d" | "M" | "H" | "D"}`;
 const TTLMultipliers: Record<string, number> = {

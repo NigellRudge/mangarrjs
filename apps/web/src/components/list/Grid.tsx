@@ -117,7 +117,7 @@ const Grid = ({
 
   useEffect(() => {
     if (!isLoading && hasItems(items) && isInView && Boolean(onEndReached)) {
-      // @ts-ignore
+      // @ts-expect-error
       onEndReached();
     }
   }, [isInView, isLoading, items, onEndReached]);
@@ -147,7 +147,7 @@ const Grid = ({
             loadEager={index <= eagerLoadingCutOff}
             type={type}
             item={item}
-            key={`${index}-${item.mangaId}`}
+            key={`${index}-${item.id}`}
           />
         ))}
       {isLoadingMore && renderSkeletons()}

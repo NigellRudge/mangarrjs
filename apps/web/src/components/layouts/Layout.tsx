@@ -5,8 +5,41 @@ import Head from "next/head";
 
 import { name } from "../../../package.json";
 import useHasElementScrolled from "@/hooks/useHasElementScrolled";
+import { MangaSourceType } from "@/types/manga";
+import BackendImage from "@/components/BackendImage";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const BackgroundImage = ({
+  src,
+  sourceId,
+}: {
+  src?: string;
+  sourceId?: MangaSourceType;
+}) => {
+  if (!src || !sourceId) return null;
+  return (
+    <div className="absolute top-0 right-0 left-0 h-[55vh]">
+      <div className="absolute z-[2] h-full w-full bg-gradient-to-b to-base-100 backdrop-blur-xs"></div>
+      <BackendImage
+        className="lre z-[1] h-[50vh] w-full object-cover"
+        src={src}
+        sizes="100vw"
+        source={sourceId}
+        alt="Shoes"
+      />
+    </div>
+  );
+};
+
+const Layout = ({
+  children,
+  backgroundImage,
+}: {
+  children: ReactNode;
+  backgroundImage?: {
+    src?: string;
+    sourceId?: MangaSourceType;
+  };
+}) => {
   const { ref, isScrolled } = useHasElementScrolled();
 
   return (
@@ -15,6 +48,12 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <title>{name}</title>
       </Head>
       <div className="flex h-screen max-w-full overflow-hidden">
+        {Boolean(backgroundImage) && (
+          <BackgroundImage
+            src={backgroundImage!.src}
+            sourceId={backgroundImage!.sourceId}
+          />
+        )}
         <Sidebar />
         <div className="flex flex-1 flex-col overflow-hidden relative">
           <Header isScrolled={isScrolled} />

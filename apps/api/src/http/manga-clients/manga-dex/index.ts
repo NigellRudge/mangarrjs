@@ -120,12 +120,11 @@ export default class MangaDexClient extends MangaSourceClient {
   }
 
   public async getInfo(mangaId: string): Promise<MangaInfoResponse> {
-    console.log({ mangaId });
     const response = await this.client.get<MangaDexResponse<MangaDexManga>>(
       `/manga/${mangaId}`,
       {
         params: {
-          includes: ["cover-art", "author", "genres", "tags"],
+          includes: ["cover_art", "author", "genres", "tags"],
           translatedLanguage: ["en"],
         },
       },

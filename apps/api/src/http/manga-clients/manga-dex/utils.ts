@@ -39,6 +39,7 @@ export const getCoverFileName = (
   const { relationships } = media;
   const covers = relationships.filter((rel) => rel.type === "cover_art");
   let cover = covers.find((cover) => cover.attributes?.locale === "en");
+
   if (!cover) {
     cover = covers[0];
   }

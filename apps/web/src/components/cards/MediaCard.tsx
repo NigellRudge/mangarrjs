@@ -10,7 +10,9 @@ const MediaCard = ({
   item: Media | Manga | Chapter;
   type?: "manga" | "chapter";
 }) => {
-  const slug = joinSafe([item.mangaId, item.sourceId], "_");
+  const id = type === "manga" ? item.id : (item as Chapter).mangaId;
+  const slug = joinSafe([id, item.sourceId], "_");
+
   return (
     <Link href={`/manga/${slug}`} className="relative">
       <div className="hover:scale-[1.02] border  group bg-base-100 transform-gpu card bg-base-10 flex-1 w-36 sm:w-40 md:w-48 transition-all duration-200 hover:border-gray-300 border-gray-500 overflow-hidden aspect-[4/6] rounded-xl">

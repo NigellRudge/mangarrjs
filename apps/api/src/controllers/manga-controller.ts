@@ -6,11 +6,8 @@ import { Get } from "@decorators/request-methods";
 import { getRequestParams, getRequestQuery } from "@utils/request-utils";
 import NotFoundError from "@errors/not-found-error";
 import { MangaSourceType } from "@mangaClients/shared/types";
-import { UseMiddleware } from "@decorators/middleware";
-import { authenticateToken } from "@middleware/auth-middleware";
 
 @Injectable()
-// @UseMiddleware(authenticateToken)
 @Controller("/manga")
 export default class MangaController {
   constructor(private readonly mangaService: MangaService) {}
@@ -23,7 +20,7 @@ export default class MangaController {
     if (!newChapters) {
       throw new NotFoundError("No new Chapters found.");
     }
-    return res.status(200).json(newChapters).send();
+    return res.json(newChapters).status(200).send();
   }
 
   @Get("/:mangaId")
@@ -31,7 +28,6 @@ export default class MangaController {
     const mangaId = getRequestParams(req, "mangaId", "string") as string;
     const source = getRequestQuery(req, "source", "string") as MangaSourceType;
 
-    console.log("--------------", mangaId, source);
     const mangaInfo = await this.mangaService.getInfo(source, mangaId);
 
     if (!mangaInfo) {

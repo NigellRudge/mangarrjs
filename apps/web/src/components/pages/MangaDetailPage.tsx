@@ -10,7 +10,7 @@ const Genres = ({ genres }: { genres?: string[] }) => (
     {genres?.map((genre) => (
       <button
         key={genre}
-        className="btn btn-primary rounded-3xl px-2 py-0.5 text-sm text-gray-100"
+        className="btn bg-orange-600 rounded-3xl px-2 py-0.5 text-xs font-semibold text-gray-100"
       >
         {genre}
       </button>
@@ -42,7 +42,7 @@ const MangaDetailPage = ({ manga }: { manga: MangaInfo }) => {
       </div>
       <div className="z-[3] mt-4 flex flex-col gap-4 md:mt-12 md:flex-row">
         <div className="flex w-full items-center justify-center md:size-fit">
-          <div className="relative max-w-[180px] w-[180px] aspect-[4/6] overflow-hidden rounded-xl border border-gray-600 md:max-w-[250px] md:min-w-[220px]">
+          <div className="relative max-w-[180px] w-[180px] aspect-[4/6] overflow-hidden rounded-2xl border border-gray-600 md:max-w-[250px] md:min-w-[220px]">
             <BackendImage
               fill
               className="h-full w-full object-cover object-center"
