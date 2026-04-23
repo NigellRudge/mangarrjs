@@ -5,8 +5,8 @@ import Head from "next/head";
 
 import { name } from "../../../package.json";
 import useHasElementScrolled from "@/hooks/useHasElementScrolled";
-import { MangaSourceType } from "@/types/manga";
 import BackendImage from "@/components/BackendImage";
+import { MangaSourceType } from "@mangarr/shared";
 
 const BackgroundImage = ({
   src,

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { backendClient } from "@/http/api-client";
 import { useState } from "react";
-import { hasItems } from "@/utils/shared";
+import { hasItems } from "@mangarr/shared";
 
 const useSearchGrid = () => {
   const { query, replace, pathname } = useRouter();

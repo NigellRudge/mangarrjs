@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
-import NotFoundError from "@errors/not-found-error";
-import AuthenticationError from "@errors/authentication-errors";
-import GeneralError from "@errors/general-error";
+import {
+  GeneralError,
+  NotFoundError,
+  AuthenticationError,
+} from "@mangarr/shared/errors";
 
 export const errorHandler = (
   err: AuthenticationError | NotFoundError | GeneralError,

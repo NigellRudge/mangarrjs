@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import User from "@database/entities/user";
-import { AuthenticatedRequest } from "@http/requests";
+import type { AuthenticatedRequest } from "@http/requests";
 
 export function checkoutUserRole(
   req: AuthenticatedRequest,

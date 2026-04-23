@@ -1,16 +1,15 @@
-import { Chapter, Manga, Media } from "@/types/manga";
 import Link from "next/link";
 import Image from "next/image";
-import { joinSafe } from "@/utils/shared";
+import { ChapterResponse, joinSafe, MangaResponse } from "@mangarr/shared";
 
 const MediaCard = ({
   item,
   type = "manga",
 }: {
-  item: Media | Manga | Chapter;
+  item: MangaResponse | ChapterResponse;
   type?: "manga" | "chapter";
 }) => {
-  const id = type === "manga" ? item.id : (item as Chapter).mangaId;
+  const id = type === "manga" ? item.id : (item as ChapterResponse).mangaId;
   const slug = joinSafe([id, item.sourceId], "_");
 
   return (
@@ -37,16 +36,18 @@ const MediaCard = ({
           <div className="flex flex-col px-2 w-full mt-auto pb-4">
             {type === "chapter" && (
               <span className="text-sm">
-                chapter: #{(item as Chapter).chapterNumber}
+                chapter: #{(item as ChapterResponse).chapterNumber}
               </span>
             )}
 
             <h1 className="z-10 text-md font-extrabold md:text-lg text-gray-50">
               {item?.title}
             </h1>
-            <p className="text-md text-white font-semibold">
-              {item.description}
-            </p>
+            {item.description && (
+              <p className="text-md text-white font-semibold">
+                {item.description}
+              </p>
+            )}
           </div>
         </div>
       </div>

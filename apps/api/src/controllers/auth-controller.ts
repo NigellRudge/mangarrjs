@@ -1,11 +1,13 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import AuthenticationService from "@services/auth-service";
-import GeneralError from "@errors/general-error";
-import NotFoundError from "@errors/not-found-error";
-import AuthenticationError from "@errors/authentication-errors";
 import Injectable from "@decorators/injectable";
 import Controller from "@decorators/controller";
 import { Post, Put } from "@decorators/request-methods";
+import {
+  GeneralError,
+  NotFoundError,
+  AuthenticationError,
+} from "@mangarr/shared/errors";
 
 @Injectable()
 @Controller("/auth")

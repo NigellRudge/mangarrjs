@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import MangaService from "@services/manga-service";
 import Injectable from "@decorators/injectable";
 import Controller from "@decorators/controller";
 import { Get } from "@decorators/request-methods";
-import { getRequestParams, getRequestQuery } from "@utils/request-utils";
-import NotFoundError from "@errors/not-found-error";
+import { getRequestParams, getRequestQuery } from "@mangarr/shared";
+import { NotFoundError } from "@mangarr/shared/errors";
 import { MangaSourceType } from "@mangaClients/shared/types";
 
 @Injectable()

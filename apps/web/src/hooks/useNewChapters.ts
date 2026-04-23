@@ -1,8 +1,9 @@
 import useSWR from "swr";
 import { backendClient } from "@/http/api-client";
+import { ChapterResponse, MangaResponse } from "@mangarr/shared";
 
 const useNewChapters = (): {
-  newChapters: any[];
+  newChapters: MangaResponse[] | ChapterResponse[];
   isLoading?: boolean;
   type: "chapter" | "manga";
 } => {

@@ -52,6 +52,7 @@
     "sqlite3": "^5.1.7",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typeorm": "^0.3.28"
+    "typeorm": "^0.3.28",
+    "@mangarr/shared": "workspace:*"
   }
 }

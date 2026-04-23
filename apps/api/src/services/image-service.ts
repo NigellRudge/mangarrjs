@@ -1,11 +1,8 @@
 import Injectable from "@decorators/injectable";
 import axios, { AxiosInstance } from "axios";
-import { MangaSourceType, MangaSourceUrlMap } from "@mangaClients/shared/types";
-import GeneralError from "@errors/general-error";
-import {
-  HEADER_CONTENT_TYPES,
-  HeaderImageContentType,
-} from "@utils/request-utils";
+import { MangaSourceType, MangaSourceUrlMap } from "@mangarr/shared";
+import { GeneralError } from "@mangarr/shared/errors";
+import { HEADER_CONTENT_TYPES, HeaderImageContentType } from "@mangarr/shared";
 import sharp from "sharp";
 import CacheService from "@services/cache-service";
 

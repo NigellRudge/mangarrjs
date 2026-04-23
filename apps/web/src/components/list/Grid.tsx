@@ -1,5 +1,9 @@
-import { Chapter, Manga } from "@/types/manga";
-import { hasItems, joinSafe } from "@/utils/shared";
+import {
+  ChapterResponse,
+  hasItems,
+  joinSafe,
+  MangaResponse,
+} from "@mangarr/shared";
 import Link from "next/link";
 import BackendImage from "@/components/BackendImage";
 import useBrowserBreakpoints from "@/hooks/useBrowserBreakpoints";
@@ -31,7 +35,7 @@ const GridItem = ({
   type,
   loadEager,
 }: {
-  item: Manga | Chapter;
+  item: MangaResponse | ChapterResponse;
   type: "manga" | "chapter";
   loadEager?: boolean;
 }) => {
@@ -41,7 +45,7 @@ const GridItem = ({
     title = item.title?.slice(0, 80) + "....";
     titleStyle = "text-md font-bold";
   }
-  const id = type === "manga" ? item.id : (item as Chapter).mangaId;
+  const id = type === "manga" ? item.id : (item as ChapterResponse).mangaId;
   const slug = joinSafe([id, item.sourceId], "_");
 
   return (
@@ -75,7 +79,7 @@ const GridItem = ({
               <span className="text-sm font-semibold text-gray-200 capitalize">
                 chapter:
                 <span className="text-primary ml-2 font-bold">
-                  #{(item as Chapter).chapterNumber}
+                  #{(item as ChapterResponse).chapterNumber}
                 </span>
               </span>
             )}
@@ -84,9 +88,11 @@ const GridItem = ({
             >
               {title}
             </h1>
-            <p className="text-md text-white font-semibold">
-              {item.description}
-            </p>
+            {item.description && (
+              <p className="text-md text-white font-semibold">
+                {item.description}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -100,7 +106,7 @@ const Grid = ({
   type = "manga",
   onEndReached,
 }: {
-  items: Manga[] | Chapter[];
+  items: MangaResponse[] | ChapterResponse[];
   isLoading?: boolean;
   type: "manga" | "chapter";
   onEndReached?: () => Promise<void> | null;

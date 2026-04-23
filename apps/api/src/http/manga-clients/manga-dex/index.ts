@@ -1,33 +1,28 @@
+import { GeneralError, NotFoundError } from "@mangarr/shared/errors";
+import MangaDexConfig from "@mangaClients/manga-dex/config";
+
+import MangaSourceClient from "@mangarr/shared/http";
+import Injectable from "@decorators/injectable";
+
+import {
+  ChapterResponse,
+  hasItems,
+  joinSafe,
+  MangaInfoResponse,
+  MangaResponse,
+  MangaSourceGenre,
+  SearchFilters,
+} from "@mangarr/shared";
+import CacheService from "@services/cache-service";
+import { uniq } from "ramda";
+import { MangaDexDTO } from "@mangarr/shared/dtos";
 import {
   MangaDexChapter,
   MangaDexListResponse,
-  MangaDexManga,
-  MangaDexResponse,
+  MangaDexMangaInfoResponse,
+  MangaDexMangaListResponse,
   MangaDexTag,
-} from "@mangaClients/manga-dex/types";
-import GeneralError from "@errors/general-error";
-import {
-  convertMangaDexChapterToStandardChapter,
-  convertMangaDexToStandardManga,
-  getCoverFileName,
-  getRelatedManga,
-  mapCoverResponseToObject,
-  normalizeMangaDexMangaInfo,
-} from "@mangaClients/manga-dex/utils";
-import MangaDexConfig from "@mangaClients/manga-dex/config";
-import {
-  ChapterListItem,
-  MangaInfoResponse,
-  MangaListItem,
-  MangaSourceGenre,
-} from "@mangaClients/shared/types";
-import MangaSourceClient from "@mangaClients/shared/base-client";
-import Injectable from "@decorators/injectable";
-import NotFoundError from "@errors/not-found-error";
-import { hasItems, joinSafe } from "@utils/list";
-import CacheService from "@services/cache-service";
-import { SearchFilters } from "@utils/request-utils";
-import { keys, uniq } from "ramda";
+} from "@mangarr/shared/types/manga-dex";
 
 const { MANGA_DEX_BASE_URL } = MangaDexConfig;
 
@@ -40,22 +35,19 @@ export default class MangaDexClient extends MangaSourceClient {
     });
   }
 
-  public async quickSearch(query: string): Promise<MangaListItem[]> {
-    const res = await this.client.get<MangaDexListResponse<MangaDexManga>>(
-      `/manga`,
-      {
-        params: {
-          title: query,
-          limit: 10,
-          includes: ["cover_art"],
-          availableTranslatedLanguage: ["en"],
-        },
+  public async quickSearch(query: string): Promise<MangaResponse[]> {
+    const res = await this.client.get<MangaDexMangaListResponse>(`/manga`, {
+      params: {
+        title: query,
+        limit: 10,
+        includes: ["cover_art"],
+        availableTranslatedLanguage: ["en"],
       },
-    );
+    });
     if (res.status !== 200) {
       throw new GeneralError("something went wrong!");
     }
-    return res.data.data.map(convertMangaDexToStandardManga).slice(0, 5);
+    return res.data.data.map(MangaDexDTO.createMangaResponse).slice(0, 5);
   }
 
   public async search(
@@ -64,7 +56,7 @@ export default class MangaDexClient extends MangaSourceClient {
       page: 1,
       pageSize: 10,
     },
-  ): Promise<MangaListItem[]> {
+  ): Promise<MangaResponse[]> {
     const { page = 1, pageSize: limit = 20, genres = [] } = searchFilters;
     const offset = (page - 1) * limit;
     const params: Record<string, any> = {
@@ -80,16 +72,13 @@ export default class MangaDexClient extends MangaSourceClient {
         params.includedTags = includedTags;
       }
     }
-    const res = await this.client.get<MangaDexListResponse<MangaDexManga>>(
-      `/manga`,
-      {
-        params,
-      },
-    );
+    const res = await this.client.get<MangaDexMangaListResponse>(`/manga`, {
+      params,
+    });
     if (res.status !== 200) {
       throw new GeneralError("something went wrong!");
     }
-    return res.data.data.map(convertMangaDexToStandardManga);
+    return res.data.data.map(MangaDexDTO.createMangaResponse);
   }
 
   public async getGenres(): Promise<MangaSourceGenre[]> {
@@ -120,7 +109,7 @@ export default class MangaDexClient extends MangaSourceClient {
   }
 
   public async getInfo(mangaId: string): Promise<MangaInfoResponse> {
-    const response = await this.client.get<MangaDexResponse<MangaDexManga>>(
+    const response = await this.client.get<MangaDexMangaInfoResponse>(
       `/manga/${mangaId}`,
       {
         params: {
@@ -132,10 +121,10 @@ export default class MangaDexClient extends MangaSourceClient {
     if (response.status !== 200) {
       throw new NotFoundError(`manga with ID not found: ${mangaId}`);
     }
-    return normalizeMangaDexMangaInfo(response.data.data);
+    return MangaDexDTO.createMangaInfoResponse(response.data.data);
   }
 
-  public async getNewChapters(): Promise<ChapterListItem[]> {
+  public async getNewChapters(): Promise<ChapterResponse[]> {
     const res = await this.makeRequest("get", "/chapter", {
       limit: 30,
       "order[publishAt]": "desc",
@@ -143,7 +132,7 @@ export default class MangaDexClient extends MangaSourceClient {
       "translatedLanguage[]": ["en"],
     });
     const mappedChapters = await this.getChaptersCoverImages(res.data);
-    return mappedChapters.map(convertMangaDexChapterToStandardChapter);
+    return mappedChapters.map(MangaDexDTO.createChapterResponse);
   }
 
   private makeRequest = async (
@@ -166,7 +155,7 @@ export default class MangaDexClient extends MangaSourceClient {
     const mangaIds: string[] = Array.from(
       new Set(
         chapters
-          .map((chapter) => getRelatedManga(chapter)!?.id)
+          .map((chapter) => MangaDexDTO.getRelatedManga(chapter)!?.id)
           .filter(Boolean),
       ),
     );
@@ -181,7 +170,7 @@ export default class MangaDexClient extends MangaSourceClient {
 
     const allCovers = { ...mangaCoverMap, ...otherCoverMap };
     return chapters.map((chapter) => {
-      const relatedManga = getRelatedManga(chapter)!;
+      const relatedManga = MangaDexDTO.getRelatedManga(chapter)!;
       return {
         ...chapter,
         attributes: {
@@ -203,7 +192,7 @@ export default class MangaDexClient extends MangaSourceClient {
       "manga[]": mangaIds,
     });
 
-    const coverMap = mapCoverResponseToObject(res.data) || {};
+    const coverMap = MangaDexDTO.mapCoverResponseToObject(res.data) || {};
 
     if (Object.keys(coverMap).length > 0) {
       await this.cacheService.set(cacheKey, coverMap, "10D");
@@ -227,7 +216,7 @@ export default class MangaDexClient extends MangaSourceClient {
     if (cachedResponse) {
       return cachedResponse;
     }
-    const response = await this.client.get<MangaDexListResponse<MangaDexManga>>(
+    const response = await this.client.get<MangaDexMangaListResponse>(
       "/manga",
       {
         params: {
@@ -240,7 +229,7 @@ export default class MangaDexClient extends MangaSourceClient {
     const { data } = response.data;
 
     const coverMap = data.reduce((acc, curr) => {
-      const filename = getCoverFileName(curr);
+      const filename = MangaDexDTO.getCoverFileName(curr);
       if (!filename) return acc;
       return {
         ...acc,

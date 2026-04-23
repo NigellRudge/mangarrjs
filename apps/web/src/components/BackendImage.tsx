@@ -1,5 +1,5 @@
 import Image, { ImageLoaderProps, ImageProps } from "next/image";
-import { MangaSourceType } from "@/types/manga";
+import { MangaSourceType } from "@mangarr/shared";
 
 const proxyUrls = ["https://cdn.readdetectiveconan.com"];
 const backendProxyUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/image-proxy`;
@@ -28,7 +28,6 @@ const BackendImage = ({
 }: Omit<ImageProps, "loader"> & {
   source?: MangaSourceType;
 }) => {
-  console.log({ source });
   return (
     <Image
       src={src}

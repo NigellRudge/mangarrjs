@@ -1,10 +1,9 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextFunction, Response } from "express";
-import AuthenticationError from "@errors/authentication-errors";
 import UserService from "@services/user-service";
 import { AuthenticatedRequest } from "@http/requests";
 import { iocContainer } from "@iocContainer/ioc-container";
-import GeneralError from "@errors/general-error";
+import { GeneralError, AuthenticationError } from "@mangarr/shared/errors";
 
 export async function authenticateToken(
   req: AuthenticatedRequest,

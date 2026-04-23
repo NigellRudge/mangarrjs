@@ -1,6 +1,6 @@
 import Controller from "@decorators/controller";
-import { Request, Response } from "express";
-import { getHeaderContentType, getRequestQuery } from "@utils/request-utils";
+import type { Request, Response } from "express";
+import { getHeaderContentType, getRequestQuery } from "@mangarr/shared";
 import { Get } from "@decorators/request-methods";
 import { MangaSourceType, MangaSourceUrlMap } from "@mangaClients/shared/types";
 import ImageService from "@services/image-service";

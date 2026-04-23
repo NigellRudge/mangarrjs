@@ -1,12 +1,13 @@
 import axios, { AxiosInstance } from "axios";
-import {
-  ChapterListItem,
-  MangaInfoResponse,
-  MangaListItem,
-  MangaSourceGenre,
-} from "@mangaClients/shared/types";
+
 import { SearchFilters } from "@mangarr/shared";
 import DocumentParser from "@mangarr/shared/document-parser";
+import {
+  ChapterResponse,
+  MangaInfoResponse,
+  MangaResponse,
+  MangaSourceGenre,
+} from "../types/reponse-types";
 
 export interface BaseClient<T, C, G, M> {
   quickSearch(query: string): Promise<T[]>;
@@ -20,8 +21,8 @@ export interface BaseClient<T, C, G, M> {
 }
 
 export default abstract class MangaSourceClient implements BaseClient<
-  MangaListItem,
-  ChapterListItem,
+  MangaResponse,
+  ChapterResponse,
   MangaSourceGenre,
   MangaInfoResponse
 > {
@@ -34,24 +35,24 @@ export default abstract class MangaSourceClient implements BaseClient<
 
   public abstract getGenres(): Promise<MangaSourceGenre[]>;
 
-  public abstract quickSearch(query: string): Promise<MangaListItem[]>;
+  public abstract quickSearch(query: string): Promise<MangaResponse[]>;
 
   public abstract search(
     query: string,
     filters?: SearchFilters,
-  ): Promise<MangaListItem[]>;
+  ): Promise<MangaResponse[]>;
 
-  public abstract getNewChapters(): Promise<ChapterListItem[]>;
+  public abstract getNewChapters(): Promise<ChapterResponse[]>;
 
   public abstract getInfo(id: string | number): Promise<MangaInfoResponse>;
 
-  getChapters(id: string): Promise<ChapterListItem[]> {
+  getChapters(id: string): Promise<ChapterResponse[]> {
     throw new Error("Method not implemented.");
   }
-  getTrendingMangas(): Promise<MangaListItem[]> {
+  getTrendingMangas(): Promise<MangaResponse[]> {
     throw new Error("Method not implemented.");
   }
-  getTrendingChapters(): Promise<ChapterListItem[]> {
+  getTrendingChapters(): Promise<ChapterResponse[]> {
     throw new Error("Method not implemented.");
   }
 }

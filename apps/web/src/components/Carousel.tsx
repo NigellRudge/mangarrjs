@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import { backendClient } from "@/http/api-client";
-import { Manga } from "@/types/manga";
 import useBrowserBreakpoints from "@/hooks/useBrowserBreakpoints";
-import { hasItems } from "@/utils/shared";
+import { hasItems, MangaResponse } from "@mangarr/shared";
 
 const DELAY = 8000;
 
@@ -13,7 +12,7 @@ const Slide = ({
   isActive,
   isMobile,
 }: {
-  slide: Manga;
+  slide: MangaResponse;
   isActive: boolean;
   isMobile?: boolean;
 }) => (
@@ -35,7 +34,7 @@ const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const timer = useRef<any>(null);
 
-  const { data: items = [], isValidating: isLoading } = useSWR<Manga[]>(
+  const { data: items = [], isValidating: isLoading } = useSWR<MangaResponse[]>(
     "trending-mangas",
     () => backendClient.getTrendingManga(),
     { revalidateOnFocus: false },

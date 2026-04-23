@@ -1,15 +1,15 @@
 import Injectable from "@decorators/injectable";
 import MangaDexClient from "@mangaClients/manga-dex";
 import CacheService from "@services/cache-service";
-import MangaSourceClient from "@mangaClients/shared/base-client";
 import { iocContainer } from "@iocContainer/ioc-container";
 import MangaPillClient from "@mangaClients/manga-pill";
 import { MangaSourceType } from "@mangaClients/shared/types";
 import AnilistApiClient from "@mangaClients/ani-list";
-import { SearchFilters } from "@utils/request-utils";
-import GeneralError from "@errors/general-error";
+import { SearchFilters } from "@mangarr/shared";
+import { GeneralError } from "@mangarr/shared/errors";
 import { mergeRight } from "ramda";
-import { removeEmptyKeys } from "@utils/list";
+import { removeEmptyKeys } from "@mangarr/shared";
+import MangaSourceClient from "@mangarr/shared/http";
 
 @Injectable()
 export default class SearchService {

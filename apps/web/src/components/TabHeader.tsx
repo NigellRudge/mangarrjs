@@ -1,6 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { SettingRouteType } from "@/types/shared";
+import { ComponentType, useEffect, useRef, useState } from "react";
 import Icon, { IconName } from "@/components/Icon";
+
+export type SettingRouteType = {
+  label: string;
+  iconName: IconName;
+  iconNameActive: IconName;
+  Component: ComponentType;
+  className?: string;
+};
 
 const Tab = ({
   label,

@@ -2,8 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "outDir": "./dist",
     "rootDir": "./src",
     "baseUrl": "./src",
@@ -21,7 +21,7 @@
       "@decorators/*": ["decorators/*"],
       "@utils/*": ["utils/*"],
       "@graphQL/*": ["http/graphql/*"],
-      "@http/*": ["http/*"]
+      "@http/*": ["http/*"],
     },
     "strict": true,
     "esModuleInterop": true,

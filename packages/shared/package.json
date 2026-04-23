@@ -1,9 +1,67 @@
 {
   "name": "@mangarr/shared",
   "version": "1.0.0",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && tsc -p tsconfig.json"
+  },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/ramda": "^0.31.1",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.6",
+    "axios": "^1.15.2",
+    "bcryptjs": "^3.0.3",
+    "cheerio": "^1.2.0",
+    "eslint": "^10.2.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "prettier": "3.8.1",
+    "ramda": "^0.32.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./document-parser": {
+      "types": "./dist/utils/document-parser.d.ts",
+      "default": "./dist/utils/document-parser.js"
+    },
+    "./list": {
+      "types": "./dist/utils/list.d.ts",
+      "default": "./dist/utils/list.js"
+    },
+    "./request-utils": {
+      "types": "./dist/utils/request-utils.d.ts",
+      "default": "./dist/utils/request-utils.js"
+    },
+    "./errors": {
+      "types": "./dist/errors/index.d.ts",
+      "default": "./dist/errors/index.js"
+    },
+    "./http": {
+      "types": "./dist/http/base-client.d.ts",
+      "default": "./dist/http/base-client.js"
+    },
+    "./dtos": {
+      "types": "./dist/types/dtos/index.d.ts",
+      "default": "./dist/types/dtos/index.js"
+    },
+    "./types/manga-dex": {
+      "types": "./dist/types/dtos/manga-dex/manga-dex.d.ts",
+      "default": "./dist/types/dtos/manga-dex/manga-dex.js"
+    },
+    "./types/manga-pill": {
+      "types": "./dist/types/dtos/manga-pill/manga-pill.d.ts",
+      "default": "./dist/types/dtos/manga-pill/manga-pill.js"
+    },"./types/ani-list": {
+      "types": "./dist/types/dtos/ani-list/ani-list.d.ts",
+      "default": "./dist/types/dtos/ani-list/ani-list.js"
+    }
   }
 }

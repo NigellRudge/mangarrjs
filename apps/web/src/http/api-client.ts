@@ -3,7 +3,7 @@ import * as querystring from "node:querystring";
 import "dotenv/config";
 import { jwtDecode } from "jwt-decode";
 import { getFromLocalStorage, setInLocalStorage } from "@/utils/local-storage";
-import { MangaSourceType, Media } from "@/types/manga";
+import { MangaResponse, MangaSourceType } from "@mangarr/shared";
 
 export const isTokenValid = (token?: string) => {
   if (!token) return false;
@@ -26,7 +26,7 @@ export const getAuthToken = () => {
 
 class ApiClient {
   private readonly client: AxiosInstance;
-  constructor(baseURL: string, headers: Record<string, any>) {
+  constructor(baseURL: string, headers: Record<string, string | number>) {
     this.client = axios.create({ baseURL, headers, withCredentials: true });
   }
 
@@ -76,7 +76,7 @@ class ApiClient {
   getTrendingManga = async () => {
     const storageKey = "trending-mangas";
     try {
-      const storedData = getFromLocalStorage<Media[]>(storageKey);
+      const storedData = getFromLocalStorage<MangaResponse[]>(storageKey);
       if (storedData) {
         return storedData;
       }

@@ -1,7 +1,7 @@
 import NavigationLink from "@/components/NavigationLink";
 import Icon, { IconName } from "@/components/Icon";
 
-import { version, name } from "../../package.json";
+import { version } from "../../package.json";
 import Logo from "@/components/Logo";
 import { useNavigationState } from "@/providers/NavigationStateProvider";
 import MenuButton from "@/components/buttons/MenuButton";
@@ -87,12 +87,10 @@ const Sidebar = () => {
               );
             })}
           </nav>
-          <div className="flex flex-col px-4 py-2 border border-gray-700 rounded-md m-2">
-            <span className="text-lg text-gray-200 capitalize">{name}</span>
-            <span className="text-sm text-gray-400 font-semibold">
-              Current version: {version}
-            </span>
-          </div>
+
+          <span className="text-sm text-gray-400 font-semibold p-4">
+            Version: {version}
+          </span>
         </div>
       </aside>
       {!isSideBarCollapsed && (

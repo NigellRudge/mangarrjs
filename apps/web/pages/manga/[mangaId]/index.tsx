@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next";
-import { MangaInfo, MangaSourceType } from "@/types/manga";
 import MangaDetailPage from "@/components/pages/MangaDetailPage";
 import { backendClient } from "@/http/api-client";
 import Layout from "@/layouts/Layout";
+import { MangaInfoResponse, MangaSourceType } from "@mangarr/shared";
 
-const Page = ({ manga }: { manga: MangaInfo }) => {
+const Page = ({ manga }: { manga: MangaInfoResponse }) => {
   return (
     <Layout
       backgroundImage={{
@@ -37,7 +37,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id,
       source: source as MangaSourceType,
     });
-    console.log({ manga });
     return {
       props: {
         manga,

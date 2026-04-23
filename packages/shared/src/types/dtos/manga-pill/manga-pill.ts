@@ -1,5 +1,4 @@
-import { MangaStatus } from "@mangaClients/manga-dex/types";
-import { MangaSourceType } from "@mangaClients/shared/types";
+import { MangaSourceType, MangaStatus } from "../../reponse-types";
 
 export type MangaPillManga = {
   id: string | number;

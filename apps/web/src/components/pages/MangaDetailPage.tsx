@@ -1,9 +1,8 @@
-import { MangaInfo } from "@/types/manga";
 import MonitorButton from "@/components/buttons/MonitorButton";
 import Icon from "@/components/Icon";
 import BackButton from "@/components/buttons/BackButton";
 import BackendImage from "@/components/BackendImage";
-import { hasItems } from "@/utils/shared";
+import { hasItems, MangaInfoResponse } from "@mangarr/shared";
 
 const Genres = ({ genres }: { genres?: string[] }) => (
   <div className="mt-2 flex flex-row flex-wrap items-center gap-2 md:items-start">
@@ -31,7 +30,7 @@ const Tags = ({ tags }: { tags?: string[] }) => (
   </div>
 );
 
-const MangaDetailPage = ({ manga }: { manga: MangaInfo }) => {
+const MangaDetailPage = ({ manga }: { manga: MangaInfoResponse }) => {
   return (
     <div className="relative flex flex-col text-gray-100">
       <div className="absolute top-0 right-0 z-[4] md:top-[16px] md:right-[16px] size-fit">

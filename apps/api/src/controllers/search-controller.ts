@@ -1,8 +1,7 @@
-import { Request, Response } from "express";
-import NotFoundError from "@errors/not-found-error";
-import GeneralError from "@errors/general-error";
+import type { Request, Response } from "express";
+import { GeneralError, NotFoundError } from "@mangarr/shared/errors";
 import SearchService from "@services/search-service";
-import { getRequestQuery, getSearchFilters } from "@utils/request-utils";
+import { getRequestQuery, getSearchFilters } from "@mangarr/shared";
 import Injectable from "@decorators//injectable";
 import Controller from "@decorators/controller";
 import { Get } from "@decorators/request-methods";

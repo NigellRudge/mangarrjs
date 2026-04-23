@@ -1,9 +1,8 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import UserService from "@services/user-service";
-import AuthenticationError from "@errors/authentication-errors";
-import GeneralError from "@errors/general-error";
-import { getRequestParams } from "@utils/request-utils";
-import { AuthenticatedRequest } from "@http/requests";
+import { GeneralError, AuthenticationError } from "@mangarr/shared/errors";
+import { getRequestParams } from "@mangarr/shared";
+import type { AuthenticatedRequest } from "@http/requests";
 import Injectable from "@decorators/injectable";
 import Controller from "@decorators/controller";
 import { Delete, Get, Post } from "@decorators/request-methods";

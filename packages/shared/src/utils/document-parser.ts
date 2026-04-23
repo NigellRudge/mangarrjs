@@ -1,5 +1,5 @@
 import * as cheerio from "cheerio";
-import GeneralError from "@errors/general-error";
+import {GeneralError} from "../errors";
 
 export default class DocumentParser {
   private readonly cheerioApi: cheerio.CheerioAPI;

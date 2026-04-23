@@ -1,8 +1,8 @@
 import Controller from "@decorators/controller";
 import { Get } from "@decorators/request-methods";
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import TrendingService from "@services/trending-service";
-import NotFoundError from "@errors/not-found-error";
+import { NotFoundError } from "@mangarr/shared/errors";
 
 @Controller("/trending")
 export default class TrendingController {

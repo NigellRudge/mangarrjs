@@ -1,10 +1,10 @@
 import Injectable from "@decorators/injectable";
 import CacheService from "@services/cache-service";
-import { MangaSourceType } from "@mangaClients/shared/types";
-import MangaSourceClient from "@mangaClients/shared/base-client";
 import { iocContainer } from "@iocContainer/ioc-container";
 import MangaDexClient from "@mangaClients/manga-dex";
 import MangaPillClient from "@mangaClients/manga-pill";
+import MangaSourceClient from "@mangarr/shared/http";
+import { MangaSourceType } from "@mangarr/shared";
 
 @Injectable()
 export default class MangaService {
@@ -12,7 +12,6 @@ export default class MangaService {
 
   public async getInfo(sourceId: MangaSourceType, mangaId: string) {
     const cacheKey = `getInfo-${sourceId}-${mangaId}`;
-    console.log({ mangaId });
     const cachedResponse = await this.cacheService.get(cacheKey);
     if (Boolean(cachedResponse)) {
       return cachedResponse;

@@ -1,37 +1,25 @@
 import Injectable from "@decorators/injectable";
-import GeneralError from "@errors/general-error";
+import { GeneralError } from "@mangarr/shared/errors";
 import queryString from "query-string";
-import MangaSourceClient from "@mangaClients/shared/base-client";
-import DocumentParser from "@utils/document-parser";
+
 import {
-  ChapterListItem,
+  ChapterResponse,
   MangaInfoResponse,
-  MangaListItem,
+  MangaResponse,
   MangaSourceGenre,
-} from "@mangaClients/shared/types";
-import {
-  getMangaIdFromUrl,
-  mangaIdFormChapterUrl,
-  normalizeMangaPillChapter,
-  normalizeMangaPillInfo,
-  normalizeMangaPillManga,
-} from "@mangaClients/manga-pill/utils";
+  MangaStatus,
+  SearchFilters,
+} from "@mangarr/shared";
+import { hasItems } from "@mangarr/shared";
+import DocumentParser from "@mangarr/shared/document-parser";
+import { MangaPillDTO } from "@mangarr/shared/dtos";
+import MangaSourceClient from "@mangarr/shared/http";
 import {
   MangaPillChapter,
   MangaPillManga,
-} from "@mangaClients/manga-pill/types";
-import { MangaStatus } from "@mangaClients/manga-dex/types";
-import { SearchFilters } from "@utils/request-utils";
-import { hasItems } from "@utils/list";
+} from "@mangarr/shared/types/manga-pill";
 
 const BASE_URL = "https://mangapill.com";
-
-const IMAGE_REQUEST_HEADERS = {
-  "User-Agent":
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36",
-  Referer: BASE_URL,
-  Accept: "image/webp,image/*,*/*;q=0.8",
-};
 
 @Injectable()
 export default class MangaPillClient extends MangaSourceClient {
@@ -39,7 +27,7 @@ export default class MangaPillClient extends MangaSourceClient {
     super(BASE_URL);
   }
 
-  public async getNewChapters(): Promise<ChapterListItem[]> {
+  public async getNewChapters(): Promise<ChapterResponse[]> {
     await this.loadParser("/chapters");
 
     return this.documentParser
@@ -75,7 +63,7 @@ export default class MangaPillClient extends MangaSourceClient {
             "div:nth-child(2)",
             mangaNameDiv,
           );
-          const mangaId = mangaIdFormChapterUrl(chapterUrl);
+          const mangaId = MangaPillDTO.mangaIdFormChapterUrl(chapterUrl);
           const mangaUrl = Boolean(mangaId)
             ? `${BASE_URL}/manga/${mangaId}`
             : null;
@@ -93,10 +81,10 @@ export default class MangaPillClient extends MangaSourceClient {
       })
       .toArray()
       .filter(Boolean)
-      .map(normalizeMangaPillChapter);
+      .map(MangaPillDTO.createChapterResponse);
   }
 
-  public async quickSearch(q: string): Promise<MangaListItem[]> {
+  public async quickSearch(q: string): Promise<MangaResponse[]> {
     await this.loadParser(`/quick-search?${queryString.stringify({ q })}`);
     return this.documentParser
       .getElementsBySelector("div.grid.gap-3 > a")
@@ -110,7 +98,7 @@ export default class MangaPillClient extends MangaSourceClient {
         );
 
         return {
-          id: getMangaIdFromUrl(mangaUrl),
+          id: MangaPillDTO.getMangaIdFromUrl(mangaUrl),
           name: mangaName,
           type: "manga",
           coverImage,
@@ -119,7 +107,7 @@ export default class MangaPillClient extends MangaSourceClient {
       })
       .filter(Boolean)
       .toArray()
-      .map(normalizeMangaPillManga)
+      .map(MangaPillDTO.createMangaResponse)
       .slice(0, 5);
   }
 
@@ -128,7 +116,7 @@ export default class MangaPillClient extends MangaSourceClient {
     searchFilters: SearchFilters = {
       page: 1,
     },
-  ): Promise<MangaListItem[]> {
+  ): Promise<MangaResponse[]> {
     const { page, genres } = searchFilters;
     await this.loadParser(
       `/search?${queryString.stringify({
@@ -162,7 +150,7 @@ export default class MangaPillClient extends MangaSourceClient {
           );
 
           return {
-            id: getMangaIdFromUrl(mangaUrl),
+            id: MangaPillDTO.getMangaIdFromUrl(mangaUrl),
             name: mangaName,
             type: "manga",
             coverImage,
@@ -174,7 +162,7 @@ export default class MangaPillClient extends MangaSourceClient {
       })
       .toArray()
       .filter(Boolean)
-      .map(normalizeMangaPillManga)
+      .map(MangaPillDTO.createMangaResponse)
       .slice(0, 5);
   }
 
@@ -233,7 +221,7 @@ export default class MangaPillClient extends MangaSourceClient {
       "div#chapters > div.my-3.grid.grid-cols-1.md\\:grid-cols-3.lg\\:grid-cols-6 > a ",
     ).length;
 
-    return normalizeMangaPillInfo({
+    return MangaPillDTO.createInfoResponse({
       id: id as string,
       coverImage,
       title,

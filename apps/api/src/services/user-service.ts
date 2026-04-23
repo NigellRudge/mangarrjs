@@ -2,9 +2,11 @@ import { Repository } from "typeorm";
 import User from "@database/entities/user";
 import { RecordStatus } from "@database/entities/shared/enums";
 import { compareHashedText } from "@utils/crypto";
-import GeneralError from "@errors/general-error";
-import AuthenticationError from "@errors/authentication-errors";
-import NotFoundError from "@errors/not-found-error";
+import {
+  GeneralError,
+  NotFoundError,
+  AuthenticationError,
+} from "@mangarr/shared/errors";
 import Injectable from "@decorators/injectable";
 import DatabaseService from "@services/database-service";
 

@@ -1,7 +1,6 @@
 import { getJwtToken, getRefreshToken, hashText } from "@utils/crypto";
 import UserService from "./user-service";
-import NotFoundError from "@errors/not-found-error";
-import AuthenticationError from "@errors/authentication-errors";
+import { NotFoundError, AuthenticationError } from "@mangarr/shared/errors";
 import { Repository } from "typeorm";
 import RefreshToken from "@database/entities/refresh-token";
 import { addDays } from "date-fns";
