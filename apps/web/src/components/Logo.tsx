@@ -4,9 +4,15 @@ import Link from "next/link";
 const Logo = () => (
   <Link
     href="/"
-    className="flex relative h-[96px] w-full items-center text-xl font-bold text-white"
+    className="flex flex-row relative max-w-[400px] max-h-[100px] w-full min-h-[100px] items-center justify-center text-xl font-bold text-white"
   >
-    <Image src="/logos/app-logo.svg" alt="logo" fill loading="eager" />
+    <Image
+      src="/logos/mangarr-logo-white.png"
+      alt="logo"
+      fill
+      loading="eager"
+      className="object-cover "
+    />
   </Link>
 );
 
