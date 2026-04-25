@@ -8,8 +8,8 @@ const Page = ({ manga }: { manga: MangaInfoResponse }) => {
   return (
     <Layout
       backgroundImage={{
-        src: manga.bannerImage,
-        sourceId: manga.sourceId,
+        src: manga?.bannerImage,
+        sourceId: manga?.sourceId,
       }}
     >
       <MangaDetailPage manga={manga} />;
