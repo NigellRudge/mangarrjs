@@ -19,6 +19,9 @@ import {
   HiMenuAlt2,
   HiX,
   HiChevronDoubleLeft,
+  HiChevronLeft,
+  HiChevronRight,
+  HiChevronDoubleRight,
   HiOutlineBookmark,
   HiBookmark,
   HiUser,
@@ -54,6 +57,9 @@ export type IconName =
   | "calendar"
   | "calendarFilled"
   | "chevronLeft"
+  | "chevronDoubleLeft"
+  | "chevronRight"
+  | "chevronDoubleRight"
   | "notifications"
   | "notificationsFilled"
   | "services"
@@ -119,8 +125,14 @@ const Icon = ({
       return <HiOutlineCalendar size={size} {...props} />;
     case "calendarFilled":
       return <HiCalendar size={size} {...props} />;
-    case "chevronLeft":
+    case "chevronDoubleLeft":
       return <HiChevronDoubleLeft size={size} {...props} />;
+    case "chevronLeft":
+      return <HiChevronLeft size={size} {...props} />;
+    case "chevronDoubleRight":
+      return <HiChevronDoubleRight size={size} {...props} />;
+    case "chevronRight":
+      return <HiChevronRight size={size} {...props} />;
     case "notifications":
       return <HiOutlineBellAlert size={size} {...props} />;
     case "notificationsFilled":
