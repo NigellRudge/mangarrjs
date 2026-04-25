@@ -13,7 +13,7 @@ const SearchInput = () => {
 
   return (
     <div className="block relative w-full">
-      <label className="input w-full  rounded-2xl bg-base-300 outline-none h-[50px] relative">
+      <label className="input w-full  rounded-3xl bg-base-300 outline-none h-[50px] relative">
         <Icon name="search" className="text-gray-300 " />
         <input
           className="text-gray-300 placeholder-gray-400 outline-none text-lg "
