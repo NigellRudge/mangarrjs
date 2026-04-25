@@ -5,6 +5,13 @@
   "packageManager": "pnpm@10.24.0",
   "scripts": {
     "dev": "pnpm -r --parallel dev",
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "pnpm --filter api dev",
+    "build:web": "pnpm --filter web build",
+    "start:web": "pnpm --filter web start",
+    "build:api": "pnpm --filter api build",
+    "start:api": "pnpm --filter api start",
+    "build:shared": "pnpm --filter @mangarr/shared build",
     "build": "pnpm -r build",
     "start": "pnpm -r start",
     "lint": "pnpm -r lint"
