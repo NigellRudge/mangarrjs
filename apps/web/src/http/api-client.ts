@@ -177,7 +177,7 @@ class ApiClient {
       page: 1,
       pageSize: 20,
       genres: [],
-      sources: "all",
+      sources: [],
     },
   ) => {
     try {
