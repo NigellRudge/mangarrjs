@@ -32,7 +32,6 @@ MangarrJS allows users to search for manga across multiple providers, compare re
 MangarrJS is built as a monorepo using **pnpm workspaces**.
 
 ```text
-.
 ├── apps/
 │   ├── backend/      # Node.js + Express API
 │   └── frontend/     # Next.js application
