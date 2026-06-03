@@ -9,10 +9,6 @@ MangarrJS allows users to search for manga across multiple providers, compare re
 ### Currently Implemented
 
 * Search manga across multiple active sources:
-
-    * AniList API
-    * MangaDex API
-    * MangaPill (web scraping)
 * Unified search experience across all configured providers
 * Backend response caching using Redis
 * Local data persistence using SQLite
@@ -50,8 +46,6 @@ MangarrJS is built as a monorepo using **pnpm workspaces**.
 
 ### Backend
 
-Built with:
-
 * Node.js
 * Express
 * Redis
@@ -65,46 +59,26 @@ Responsibilities:
 * Data normalization
 * Caching
 * Download orchestration
+---
 
 ### Frontend
-
-Built with:
 
 * Next.js
 * React
 * TypeScript
 
 Responsibilities:
-
 * Search interface
 * Manga discovery
 * Download management
 * User experience
+---
 
 ### Shared Package
-
-Contains reusable code shared between frontend and backend:
-
 * Shared types
 * API contracts
 * Utility functions
 * Common business logic
-
----
-
-## Technology Stack
-
-| Component       | Technology          |
-| --------------- | ------------------- |
-| Package Manager | pnpm                |
-| Monorepo        | pnpm Workspaces     |
-| Backend         | Node.js + Express   |
-| Frontend        | Next.js             |
-| Language        | TypeScript          |
-| Cache           | Redis               |
-| Database        | SQLite              |
-| APIs            | AniList, MangaDex   |
-| Scraping        | Custom Web Scrapers |
 
 ---
 
@@ -149,22 +123,35 @@ pnpm install
 
 ### Backend
 
-Create a `.env` file inside the backend application:
+Populate the `.env.local` file inside the backend application with the relevant keys for your own development environment:
 
 ```env
-PORT=3001
+PORT=
+HOST=
+FRONTEND_URL=
+DB_FILE_NAME=
+JWT_SECRET=
+JWT_TOKEN_LIFE_TIME=
+REFRESH_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET_LIFE_TIME=
 
-REDIS_URL=redis://localhost:6379
-
-DATABASE_PATH=./data/database.sqlite
+## Redis
+DISABLE_REDIS=
+REDIS_PASSWORD=
+REDIS_USER=
+REDIS_URL=
+REDIS_CAHE_EXPIRATION=
+REDIS_RETRY_LIMIT=
 ```
 
 ### Frontend
 
-Create a `.env.local` file:
+Populate the `.env.local` file inside the backend application with the relevant keys:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_BACKEND_URL=
+NEXT_PUBLIC_BACKEND_HOST=
+NEXT_PUBLIC_BACKEND_PORT=
 ```
 
 ---
@@ -276,8 +263,7 @@ git push origin feature/my-feature
 ## Repository
 
 GitHub Repository:
-
-[MangarrJS Repository](https://github.com/NigellRudge/mangarr?utm_source=chatgpt.com)
+[MangarrJS Repository](https://github.com/NigellRudge/mangarrjs)
 
 ---
 
