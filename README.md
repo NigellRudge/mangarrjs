@@ -34,7 +34,7 @@ MangarrJS allows users to search for manga across multiple providers, compare re
  
 ![description](/screenshots/screenshot_3.png)
  
-![description](/screenshots/screenshot_2.png)
+![description](/screenshots/screenshot_5.png)
 
 ## Architecture
 
