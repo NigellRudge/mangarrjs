@@ -27,6 +27,15 @@ MangarrJS allows users to search for manga across multiple providers, compare re
 
 ---
 
+ ### Screenshots:
+![description](/screenshots/screenshot_4.png)
+
+![description](/screenshots/screenshot_1.png)
+ 
+![description](/screenshots/screenshot_3.png)
+ 
+![description](/screenshots/screenshot_2.png)
+
 ## Architecture
 
 MangarrJS is built as a monorepo using **pnpm workspaces**.
