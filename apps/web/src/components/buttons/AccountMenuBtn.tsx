@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useClickOutside from "@/hooks/useClickOutside";
 import Link from "next/link";
-import Icon, { IconName } from "@/components/Icon";
+import Icon, { IconName } from "@/components/shared/Icon";
 import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
 
@@ -58,8 +58,8 @@ const AccountMenuBtn = ({}) => {
       </div>
 
       {!isCollapsed && (
-        <ul className="w-64 animate-dropdown absolute flex flex-col right-0 mt-3 origin-top-right rounded-md shadow-lg scale-100 bg-base-100/95 border-1 z-20 border-gray-500 p-2">
-          <li className="flex flex-col border-b border-gray-500 px-4 pt-2 pb-4 mb-2">
+        <ul className="w-64 animate-dropdown backdrop-blur-sm absolute flex flex-col right-0 mt-3 origin-top-right rounded-md shadow-lg scale-100 bg-base-100/90 border-1 z-20 border-gray-700 p-2">
+          <li className="flex flex-col border-b border-gray-700 -mx-2 px-5 pt-2 pb-4 mb-2">
             <span className="text-xl text-gray-100 font-bold capitalize">
               {user?.username}
             </span>

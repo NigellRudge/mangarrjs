@@ -10,6 +10,7 @@
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.10",
     "@types/ramda": "^0.31.1",
+    "@types/slug": "^5.0.9",
     "typescript": "^6.0.3"
   },
   "dependencies": {
@@ -21,7 +22,8 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "prettier": "3.8.1",
-    "ramda": "^0.32.0"
+    "ramda": "^0.32.0",
+    "slug": "^11.0.1"
   },
   "exports": {
     ".": {
@@ -35,6 +37,18 @@
     "./list": {
       "types": "./dist/utils/list.d.ts",
       "default": "./dist/utils/list.js"
+    },
+    "./string-utils": {
+      "types": "./dist/utils/string-utils.d.ts",
+      "default": "./dist/utils/string-utils.js"
+    },
+    "./synonyms": {
+      "types": "./dist/utils/synonyms.d.ts",
+      "default": "./dist/utils/synonyms.js"
+    },
+    "./sorting": {
+      "types": "./dist/utils/sorting.d.ts",
+      "default": "./dist/utils/sorting.js"
     },
     "./request-utils": {
       "types": "./dist/utils/request-utils.d.ts",
@@ -59,7 +73,8 @@
     "./types/manga-pill": {
       "types": "./dist/types/dtos/manga-pill/manga-pill.d.ts",
       "default": "./dist/types/dtos/manga-pill/manga-pill.js"
-    },"./types/ani-list": {
+    },
+    "./types/ani-list": {
       "types": "./dist/types/dtos/ani-list/ani-list.d.ts",
       "default": "./dist/types/dtos/ani-list/ani-list.js"
     }

@@ -5,6 +5,7 @@ import MangaDexClient from "@mangaClients/manga-dex";
 import MangaPillClient from "@mangaClients/manga-pill";
 import MangaSourceClient from "@mangarr/shared/http";
 import { MangaSourceType } from "@mangarr/shared";
+import AnilistApiClient from "@mangaClients/ani-list";
 
 @Injectable()
 export default class MangaService {
@@ -48,6 +49,8 @@ export default class MangaService {
         return iocContainer.resolve(MangaDexClient);
       case "manga-pill":
         return iocContainer.resolve(MangaPillClient);
+      case "ani-list":
+        return iocContainer.resolve(AnilistApiClient);
       default:
         return iocContainer.resolve(MangaDexClient);
     }

@@ -9,6 +9,7 @@ import {
   MangaSourceGenre,
   MangaStatus,
   SearchFilters,
+  DiscoverFilters,
 } from "@mangarr/shared";
 import { hasItems } from "@mangarr/shared";
 import DocumentParser from "@mangarr/shared/document-parser";
@@ -18,6 +19,7 @@ import {
   MangaPillChapter,
   MangaPillManga,
 } from "@mangarr/shared/types/manga-pill";
+import { GetWordsForMangaSource } from "@mangarr/shared/synonyms";
 
 const BASE_URL = "https://mangapill.com";
 
@@ -162,8 +164,7 @@ export default class MangaPillClient extends MangaSourceClient {
       })
       .toArray()
       .filter(Boolean)
-      .map(MangaPillDTO.createMangaResponse)
-      .slice(0, 5);
+      .map(MangaPillDTO.createMangaResponse);
   }
 
   public async getGenres(): Promise<MangaSourceGenre[]> {
@@ -234,6 +235,76 @@ export default class MangaPillClient extends MangaSourceClient {
     });
   }
 
+  public async getMediaStatusTypes(): Promise<string[]> {
+    return [
+      "publishing",
+      "finished",
+      "on hiatus",
+      "discontinued",
+      "not yet published",
+    ];
+  }
+
+  public async getSupportedMediaTypes(): Promise<string[]> {
+    return ["manga", "novel", "one-shot", "doujinshi", "manhua", "oel"];
+  }
+
+  public async isHealthy(): Promise<Boolean> {
+    try {
+      const res = await this.client.get("/", {
+        timeout: 3000,
+      });
+      return res.status === 200;
+    } catch {
+      return false;
+    }
+  }
+
+  public async discoverMangas(
+    inputFilters: DiscoverFilters,
+  ): Promise<MangaResponse[]> {
+    const filters = this.mapFilters(inputFilters);
+    await this.loadParser(`/search?${queryString.stringify(filters)}`);
+    return this.documentParser
+      .getElementsBySelector(
+        "div.my-3.grid.justify-end.gap-3.grid-cols-2.md\\:grid-cols-3.lg\\:grid-cols-5 > div",
+      )
+      .map((_, element) => {
+        try {
+          const imageElement = this.documentParser.getSingleElement(
+            "a",
+            element,
+          );
+          const mangaUrl = this.documentParser
+            .select(imageElement)
+            .attr("href");
+          const coverImage =
+            this.documentParser.getElementAttribute(
+              "img",
+              "data-src",
+              imageElement,
+            ) || "";
+          const mangaName = this.documentParser.getElementText(
+            "div.flex.flex-col.justify-end > a.mb-2 > div",
+            element,
+          );
+
+          return {
+            id: MangaPillDTO.getMangaIdFromUrl(mangaUrl),
+            name: mangaName,
+            type: "manga",
+            coverImage,
+            mangaUrl: Boolean(mangaUrl) ? `${BASE_URL}${mangaUrl}` : "",
+          } as MangaPillManga;
+        } catch {
+          return null;
+        }
+      })
+      .toArray()
+      .filter(Boolean)
+      .map(MangaPillDTO.createMangaResponse);
+  }
+
   private mapGenre(element: any): MangaSourceGenre | null {
     const label = this.documentParser.getSingleElement(
       "label > input",
@@ -255,5 +326,22 @@ export default class MangaPillClient extends MangaSourceClient {
       throw new GeneralError("could not load featured chapters");
     }
     this.documentParser = new DocumentParser(response.data);
+  }
+
+  private mapFilters(filters?: DiscoverFilters): Record<string, any> {
+    if (!filters) {
+      return {
+        page: 1,
+        pageSize: 25,
+        genres: [],
+      };
+    }
+    return {
+      q: "",
+      status: GetWordsForMangaSource(filters.statusTypes, "manga-pill"),
+      type: GetWordsForMangaSource(filters.mediaTypes, "manga-pill"),
+      page: filters.page || 1,
+      genre: hasItems(filters.genres) ? filters.genres : undefined,
+    };
   }
 }

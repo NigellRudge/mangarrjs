@@ -16,7 +16,7 @@ const Grid = ({
   type = "manga",
   onEndReached,
 }: {
-  items: MangaResponse[] | ChapterResponse[];
+  items: MangaResponse[] | ChapterResponse[] | undefined;
   isLoading?: boolean;
   type: "manga" | "chapter";
   onEndReached?: () => Promise<void> | null;
@@ -43,33 +43,36 @@ const Grid = ({
   }
 
   const renderSkeletons = () =>
-    Array(24)
+    Array(50)
       .fill(0)
       .map((_, i) => <PlaceHolderItem key={i} />);
 
   if (isLoading && !hasItems(items)) {
     return (
-      <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(12.5rem,1fr))] gap-2 overflow-y-scroll p-1">
+      <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(11rem,1fr))] gap-2 overflow-y-auto p-1">
         {renderSkeletons()}
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fit,minmax(12.5rem,1fr))] gap-2 h-full overflow-y-scroll p-1 no-scrollbar">
+    <ul className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(11rem,1fr))] gap-3 no-scrollbar relative">
       {hasItems(items) &&
-        items.map((item, index) => (
-          <MediaCard
-            canExpand
-            loadEager={index <= eagerLoadingCutOff}
-            type={type}
-            item={item}
-            key={`${index}-${item.id}`}
-          />
+        items?.map((item, index) => (
+          <li key={`${index}-${item.id}`}>
+            <div className="w-full">
+              <MediaCard
+                canExpand
+                loadEager={index <= eagerLoadingCutOff}
+                type={type}
+                item={item}
+              />
+            </div>
+          </li>
         ))}
       {isLoadingMore && renderSkeletons()}
-      <div ref={ref} className="opacity-0"></div>
-    </div>
+      <li ref={ref} className="opacity-0"></li>
+    </ul>
   );
 };
 

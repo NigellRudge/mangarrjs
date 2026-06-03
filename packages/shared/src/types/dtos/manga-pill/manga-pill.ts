@@ -1,4 +1,4 @@
-import { MangaSourceType, MangaStatus } from "../../reponse-types";
+import { MangaSourceType, MangaStatus } from "../../response-types";
 
 export type MangaPillManga = {
   id: string | number;

@@ -5,7 +5,7 @@ const Page = ({}) => {
   return <Layout>calendar</Layout>;
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {},
   };

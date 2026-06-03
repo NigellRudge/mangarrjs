@@ -3,14 +3,14 @@ import {
   ChapterResponse,
   MangaInfoResponse,
   MangaResponse,
-} from "../../reponse-types";
+} from "../../response-types";
 import { hasItems, joinSafe } from "../../../utils/list";
 
 export class MangaDexDTO {
   private static readonly MANGA_DEX_IMAGES_URL =
     "https://uploads.mangadex.org/covers/";
-  private static readonlyMANGA_DEX_CHAPTER_IMG_URL: "at-home/server/";
-  private static readonlyMANGA_DEX_BASE_URL: "https://api.mangadex.org";
+  private static readonly MANGA_DEX_CHAPTER_IMG_URL: "at-home/server/";
+  private static readonly MANGA_DEX_BASE_URL: "https://api.mangadex.org";
 
   public static getCoverFileName(
     media: MangaDexManga | MangaDexChapter,
@@ -25,7 +25,7 @@ export class MangaDexDTO {
     }
     if (!cover) return "";
     const fileName = cover?.attributes?.fileName;
-    return `${this.MANGA_DEX_IMAGES_URL}${media.id}/${fileName}.256.jpg`;
+    return `${MangaDexDTO.MANGA_DEX_IMAGES_URL}${media.id}/${fileName}.256.jpg`;
   }
 
   public static getRelatedManga = (
@@ -37,7 +37,7 @@ export class MangaDexDTO {
     );
   };
 
-  public static getTitle(manga: any) {
+  public static getTitle(manga: MangaDexManga) {
     const {
       attributes: { title: titles, altTitles },
     } = manga;
@@ -76,7 +76,7 @@ export class MangaDexDTO {
 
       if (Boolean(coverMap[mangaId])) continue;
       coverMap[mangaId] =
-        `${this.MANGA_DEX_IMAGES_URL}${mangaId}/${cover.attributes.fileName}.512.jpg`;
+        `${MangaDexDTO.MANGA_DEX_IMAGES_URL}${mangaId}/${cover.attributes.fileName}.512.jpg`;
     }
     return coverMap;
   }
@@ -103,7 +103,7 @@ export class MangaDexDTO {
       title,
       id,
       sourceId: "manga-dex",
-      coverImage: this.getCoverFileName(manga),
+      coverImage: MangaDexDTO.getCoverFileName(manga),
     };
   }
 
@@ -121,7 +121,7 @@ export class MangaDexDTO {
       },
     } = chapter;
 
-    const manga = this.getRelatedManga(chapter);
+    const manga = MangaDexDTO.getRelatedManga(chapter);
 
     return {
       title: joinSafe([title, chapterNumber], ": #"),
@@ -139,10 +139,10 @@ export class MangaDexDTO {
   ): MangaInfoResponse {
     return {
       id: manga.id,
-      title: this.getTitle(manga),
+      title: MangaDexDTO.getTitle(manga),
       sourceId: "manga-dex",
-      genres: this.getGenres(manga),
-      coverImage: this.getCoverFileName(manga),
+      genres: MangaDexDTO.getGenres(manga),
+      coverImage: MangaDexDTO.getCoverFileName(manga),
       status: manga.attributes.status,
       description: manga.attributes.description["en"],
       publishDate: new Date(`01-01-${manga.attributes.year}`),

@@ -1,8 +1,12 @@
 import Controller from "@decorators/controller";
 import type { Request, Response } from "express";
-import { getHeaderContentType, getRequestQuery } from "@mangarr/shared";
+import {
+  getHeaderContentType,
+  getRequestQuery,
+  MangaSourceType,
+  MangaSourceUrlMap,
+} from "@mangarr/shared";
 import { Get } from "@decorators/request-methods";
-import { MangaSourceType, MangaSourceUrlMap } from "@mangaClients/shared/types";
 import ImageService from "@services/image-service";
 
 @Controller("/image-proxy")

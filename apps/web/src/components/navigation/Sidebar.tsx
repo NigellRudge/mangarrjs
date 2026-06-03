@@ -1,11 +1,11 @@
-import NavigationLink from "@/components/NavigationLink";
-import Icon, { IconName } from "@/components/Icon";
+import NavigationLink from "@/components/navigation/NavigationLink";
+import Icon, { IconName } from "@/components/shared/Icon";
 
-import { version } from "../../package.json";
-import Logo from "@/components/Logo";
+import { version } from "../../../package.json";
+import Logo from "@/components/shared/Logo";
 import { useNavigationState } from "@/providers/NavigationStateProvider";
-import MenuButton from "@/components/buttons/MenuButton";
 import { useRouter } from "next/router";
+import useOnKeyPress from "@/hooks/useOnKeyPress";
 
 type RouteConfig = {
   url: string;
@@ -16,15 +16,15 @@ type RouteConfig = {
 const routes: RouteConfig[] = [
   {
     url: "/",
-    label: "Library",
+    label: "Trending",
     iconName: "folder",
     activeIconName: "folderFilled",
   },
   {
-    url: "/calendar",
-    label: "Calendar",
-    iconName: "calendar",
-    activeIconName: "calendarFilled",
+    url: "manga",
+    label: "Mangas",
+    iconName: "book",
+    activeIconName: "book",
   },
   {
     url: "/tasks",
@@ -45,9 +45,28 @@ const isRouteActive = (route: RouteConfig, path: string) => {
   return path.startsWith(route.url);
 };
 
+const CloseButton = () => {
+  const { setIsSideBarCollapsed } = useNavigationState();
+  return (
+    <div className="lg:hidden flex">
+      <button
+        onClick={() => setIsSideBarCollapsed(true)}
+        className="flex align-center justify-center p-2 lg:hidden absolute top-1 right-1 btn btn-link"
+      >
+        <Icon name="close" className="text-gray-200" size={32} />
+      </button>
+    </div>
+  );
+};
+
 const Sidebar = () => {
   const { pathname } = useRouter();
   const { isSideBarCollapsed, setIsSideBarCollapsed } = useNavigationState();
+
+  useOnKeyPress({
+    keycode: "Escape",
+    callback: () => setIsSideBarCollapsed(true),
+  });
 
   return (
     <>
@@ -56,14 +75,12 @@ const Sidebar = () => {
       bg-base-100 h-[100vh]
       transition-all duration-200
       ease-in-out
-         z-30 lg:z-[5] ${isSideBarCollapsed ? "-translate-x-full" : "translate-x-0"} absolute lg:relative lg:translate-x-0 w-64 flex flex-col border-r border-gray-700
+         z-30 lg:z-[5] ${isSideBarCollapsed ? "-translate-x-full" : "translate-x-0"} fixed lg:relative lg:translate-x-0 w-64 flex flex-col border-r border-gray-700
       `}
       >
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center relative md:pt-4">
           <Logo />
-          <span className="lg:hidden">
-            <MenuButton />
-          </span>
+          <CloseButton />
         </div>
         <div className="flex flex-col justify-between grow">
           <nav className="flex-1 px-4 pt-4 space-y-1 flex flex-col gap-2">
@@ -96,7 +113,7 @@ const Sidebar = () => {
       {!isSideBarCollapsed && (
         <div
           onClick={() => setIsSideBarCollapsed(true)}
-          className="w-[100vw] bg-gray-600 opacity-50 z-20 h-[100vh] absolute top-0 bottom-0 right-0 left-0 "
+          className="w-[100vw] bg-gray-700/80 opacity-50 z-20 h-[100vh] absolute top-0 bottom-0 right-0 left-0 animate-sidebar duration-200"
         />
       )}
     </>

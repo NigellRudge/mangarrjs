@@ -61,6 +61,54 @@ query ($search: String, $page: Int, $perPage: Int, $minScore: Int, $genres: [Str
 }
     `;
 
+export const browseGraphQlQuery = `
+query BrowseMangaByGenre($page: Int, $perPage: Int, $genres: [String]) {
+  Page(page: $page, perPage: $perPage) {
+    pageInfo {
+      total
+      currentPage
+      lastPage
+      hasNextPage
+      perPage
+    }
+    media(type: MANGA, genre_in: $genres, sort: POPULARITY_DESC) {
+      id
+      title {
+        romaji
+        english
+        native
+      }
+      genres
+      popularity
+      coverImage {
+        large
+        extraLarge
+      }
+      bannerImage
+      description(asHtml: false)
+      averageScore
+      status
+    }
+  }
+}
+    `;
+
+export const healthCheckQuery = `
+query {
+  Page(page: 1, perPage: 1) {
+    pageInfo {
+      total
+    }
+    media(type: MANGA) {
+      id
+      title {
+        english
+      }
+    }
+  }
+}
+`;
+
 export const highlightedItems = `
 query GetTrendingMedia {
   Page(perPage: 6) {

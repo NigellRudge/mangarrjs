@@ -37,6 +37,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id,
       source: source as MangaSourceType,
     });
+    if (!manga) {
+      return {
+        notFound: true,
+      };
+    }
     return {
       props: {
         manga,

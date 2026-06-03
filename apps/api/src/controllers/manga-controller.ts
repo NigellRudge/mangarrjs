@@ -3,9 +3,12 @@ import MangaService from "@services/manga-service";
 import Injectable from "@decorators/injectable";
 import Controller from "@decorators/controller";
 import { Get } from "@decorators/request-methods";
-import { getRequestParams, getRequestQuery } from "@mangarr/shared";
+import {
+  getRequestParams,
+  getRequestQuery,
+  MangaSourceType,
+} from "@mangarr/shared";
 import { NotFoundError } from "@mangarr/shared/errors";
-import { MangaSourceType } from "@mangaClients/shared/types";
 
 @Injectable()
 @Controller("/manga")

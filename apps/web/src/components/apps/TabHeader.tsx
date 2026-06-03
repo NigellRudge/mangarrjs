@@ -1,5 +1,5 @@
 import { ComponentType, useEffect, useRef, useState } from "react";
-import Icon, { IconName } from "@/components/Icon";
+import Icon, { IconName } from "@/components/shared/Icon";
 
 export type SettingRouteType = {
   label: string;

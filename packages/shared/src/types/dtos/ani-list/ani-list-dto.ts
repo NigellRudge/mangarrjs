@@ -9,7 +9,7 @@ import {
   MangaResponse,
   MangaSourceGenre,
   MangaStatus,
-} from "../../reponse-types";
+} from "../../response-types";
 import { hasItems, joinSafe } from "../../../utils/list";
 import { flatten, pipe, uniq } from "ramda";
 
@@ -42,12 +42,18 @@ export class AniListDTO {
     }[],
   ): string[] {
     if (!hasItems(media)) return [];
-    return pipe(flatten, uniq)(media);
+    return pipe(
+      (media: { genres: string[] }[]) => media.map((m) => m.genres),
+      flatten,
+      uniq,
+    )(media);
   }
 
   public static createGenreResponse(genres: GenreResult): MangaSourceGenre[] {
-    const flattenGenres = this.flattenArray(genres.Page.media);
+    const flattenGenres = this.flattenArray(genres.data.Page.media);
+
     if (!hasItems(flattenGenres)) return [];
+
     return flattenGenres.map((genre) => ({
       sourceId: "ani-list",
       id: `ani-list-${genre}`,

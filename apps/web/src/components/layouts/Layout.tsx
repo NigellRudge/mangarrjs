@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
+import Sidebar from "@/components/navigation/Sidebar";
+import Header from "@/components/navigation/Header";
 import Head from "next/head";
 
 import { name } from "../../../package.json";
 import useHasElementScrolled from "@/hooks/useHasElementScrolled";
-import BackendImage from "@/components/BackendImage";
+import BackendImage from "@/components/image/BackendImage";
 import { MangaSourceType } from "@mangarr/shared";
 
 const BackgroundImage = ({

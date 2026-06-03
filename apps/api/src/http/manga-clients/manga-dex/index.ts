@@ -12,6 +12,7 @@ import {
   MangaResponse,
   MangaSourceGenre,
   SearchFilters,
+  DiscoverFilters,
 } from "@mangarr/shared";
 import CacheService from "@services/cache-service";
 import { uniq } from "ramda";
@@ -23,6 +24,7 @@ import {
   MangaDexMangaListResponse,
   MangaDexTag,
 } from "@mangarr/shared/types/manga-dex";
+import { GetWordsForMangaSource } from "@mangarr/shared/synonyms";
 
 const { MANGA_DEX_BASE_URL } = MangaDexConfig;
 
@@ -72,6 +74,36 @@ export default class MangaDexClient extends MangaSourceClient {
         params.includedTags = includedTags;
       }
     }
+    const res = await this.client.get<MangaDexMangaListResponse>(`/manga`, {
+      params,
+    });
+    if (res.status !== 200) {
+      throw new GeneralError("something went wrong!");
+    }
+    return res.data.data.map(MangaDexDTO.createMangaResponse);
+  }
+
+  public async discoverMangas(
+    filter: DiscoverFilters = {
+      page: 1,
+      pageSize: 10,
+    },
+  ): Promise<MangaResponse[]> {
+    const { page = 1, pageSize: limit = 20, genres = [] } = filter;
+    const params: Record<string, any> = {
+      limit,
+      offset: (page - 1) * limit,
+      includes: ["cover_art", "genres"],
+      availableTranslatedLanguage: ["en"],
+      "status[]": GetWordsForMangaSource(filter.statusTypes || [], "manga-dex"),
+    };
+    if (hasItems(genres)) {
+      const includedTags = await this.getGenreIds(genres!);
+      if (hasItems(includedTags)) {
+        params.includedTags = includedTags;
+      }
+    }
+
     const res = await this.client.get<MangaDexMangaListResponse>(`/manga`, {
       params,
     });
@@ -133,6 +165,43 @@ export default class MangaDexClient extends MangaSourceClient {
     });
     const mappedChapters = await this.getChaptersCoverImages(res.data);
     return mappedChapters.map(MangaDexDTO.createChapterResponse);
+  }
+
+  public async getMediaStatusTypes(): Promise<string[]> {
+    return ["ongoing", "completed", "hiatus", "cancelled"];
+  }
+
+  public async getSupportedMediaTypes(): Promise<string[]> {
+    const redisKey = "manga-dex-media-types";
+    const cachedData = await this.cacheService.get(redisKey);
+    if (cachedData) {
+      return cachedData;
+    }
+    const response =
+      await this.client.get<MangaDexListResponse<MangaDexTag>>("/manga/tag");
+    if (response.status !== 200) {
+      throw new GeneralError("something went wrong!");
+    }
+    const mediaTypes = response.data.data
+      .filter((tag) => tag.attributes.group === "format")
+      .map((tag) => {
+        return tag.attributes.name["en"];
+      });
+
+    if (hasItems(mediaTypes)) {
+      await this.cacheService.set(redisKey, mediaTypes);
+    }
+    return mediaTypes;
+  }
+
+  public async isHealthy(): Promise<Boolean> {
+    try {
+      const response = await this.client.get("/ping");
+      return response.status === 200;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 
   private makeRequest = async (

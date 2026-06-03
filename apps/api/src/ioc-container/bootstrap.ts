@@ -7,6 +7,7 @@ import "@controllers/auth-controller";
 import "@controllers/user-controller";
 import "@controllers/image-controller";
 import "@controllers/trending-controller";
+import "@controllers/discover-controller";
 
 export function registerControllers(app: Router) {
   const controllers = Reflect.getMetadata("controllers", global) || [];

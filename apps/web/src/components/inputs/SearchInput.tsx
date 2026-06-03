@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@/components/shared/Icon";
 import useSearchInput from "@/hooks/useSearch";
 
 const SearchInput = () => {
@@ -13,10 +13,10 @@ const SearchInput = () => {
 
   return (
     <div className="block relative w-full">
-      <label className="input w-full  rounded-3xl bg-base-300 outline-none h-[50px] relative">
+      <label className="input w-full  rounded-3xl bg-base-300 outline-none h-[50px] relative focus:outline-none">
         <Icon name="search" className="text-gray-300 " />
         <input
-          className="text-gray-300 placeholder-gray-400 outline-none text-lg "
+          className="text-gray-300 placeholder-gray-400 outline-none text-base font-normal"
           type="input"
           value={inputValue}
           onChange={handleSearch}
@@ -29,7 +29,7 @@ const SearchInput = () => {
             className="btn btn-ghost bg-gray-200 rounded-full px-2 py-1 h-[35px]"
             onClick={clearQuery}
           >
-            <Icon name="close" size={20} className="text-gray-800 " />
+            <Icon name="close" size={18} className="text-gray-800 " />
           </button>
         )}
       </label>

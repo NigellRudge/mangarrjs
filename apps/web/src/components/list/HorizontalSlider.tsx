@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Icon, { IconName } from "@/components/Icon";
+import Icon, { IconName } from "@/components/shared/Icon";
 import debounce from "lodash/debounce";
 import { ChapterResponse, hasItems, MangaResponse } from "@mangarr/shared";
 import MediaCard from "@/components/cards/MediaCard";
@@ -74,19 +74,14 @@ const useSlider = ({
     const scrollPosition = containerRef.current?.scrollLeft ?? 0;
 
     if (isLoading || !items || items?.length === 0) {
-      debugger;
       setScrollPos({ isStart: true, isEnd: true });
     } else if (clientWidth >= scrollWidth) {
-      debugger;
       setScrollPos({ isStart: true, isEnd: true });
     } else if (scrollPosition >= scrollWidth - clientWidth) {
-      debugger;
       setScrollPos({ isStart: false, isEnd: true });
     } else if (scrollPosition > 0) {
-      debugger;
       setScrollPos({ isStart: false, isEnd: false });
     } else {
-      debugger;
       setScrollPos({ isStart: true, isEnd: false });
     }
   }, [items, isLoading]);
@@ -170,7 +165,6 @@ const HorizontalSlider = ({
 
   if (!hasItems(items)) return null;
 
-  console.log({ isEnd, isStart });
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-row justify-between">

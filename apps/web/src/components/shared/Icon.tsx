@@ -17,7 +17,6 @@ import {
   HiOutlineSearch,
   HiStar,
   HiMenuAlt2,
-  HiX,
   HiChevronDoubleLeft,
   HiChevronLeft,
   HiChevronRight,
@@ -35,7 +34,15 @@ import {
   HiOutlinePlus,
   HiFolder,
   HiOutlineLogin,
+  HiBookOpen,
+  HiFilter,
+  HiOutlineSortDescending,
+  HiOutlineSortAscending,
+  HiOutlineXCircle,
+  HiOutlineDownload,
 } from "react-icons/hi";
+
+import { IoCloseOutline } from "react-icons/io5";
 
 export type IconName =
   | "gear"
@@ -72,6 +79,12 @@ export type IconName =
   | "refresh"
   | "plus"
   | "login"
+  | "book"
+  | "sortDescending"
+  | "sortAscending"
+  | "filter"
+  | "download"
+  | "clear"
   | "close";
 
 const Icon = ({
@@ -120,7 +133,7 @@ const Icon = ({
     case "hamburger":
       return <HiMenuAlt2 size={size} {...props} />;
     case "close":
-      return <HiX size={size} {...props} />;
+      return <IoCloseOutline size={size} {...props} />;
     case "calendar":
       return <HiOutlineCalendar size={size} {...props} />;
     case "calendarFilled":
@@ -157,6 +170,18 @@ const Icon = ({
       return <HiOutlinePlus size={size} {...props} />;
     case "login":
       return <HiOutlineLogin size={size} {...props} />;
+    case "book":
+      return <HiBookOpen size={size} {...props} />;
+    case "filter":
+      return <HiFilter size={size} {...props} />;
+    case "sortAscending":
+      return <HiOutlineSortAscending size={size} {...props} />;
+    case "sortDescending":
+      return <HiOutlineSortDescending size={size} {...props} />;
+    case "clear":
+      return <HiOutlineXCircle size={size} {...props} />;
+    case "download":
+      return <HiOutlineDownload size={size} {...props} />;
 
     default:
       return null;

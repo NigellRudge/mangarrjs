@@ -1,7 +1,7 @@
 import MonitorButton from "@/components/buttons/MonitorButton";
-import Icon from "@/components/Icon";
+import Icon from "@/components/shared/Icon";
 import BackButton from "@/components/buttons/BackButton";
-import BackendImage from "@/components/BackendImage";
+import BackendImage from "@/components/image/BackendImage";
 import { hasItems, MangaInfoResponse } from "@mangarr/shared";
 
 const Genres = ({ genres }: { genres?: string[] }) => (
@@ -45,9 +45,9 @@ const MangaDetailPage = ({ manga }: { manga: MangaInfoResponse }) => {
             <BackendImage
               fill
               className="h-full w-full object-cover object-center"
-              src={manga.coverImage}
-              alt={manga.coverImage}
-              source={manga.sourceId}
+              src={manga?.coverImage}
+              alt={manga?.coverImage}
+              source={manga?.sourceId}
               sizes="(min-width: 768px) 200px)"
               unoptimized
             />
@@ -61,7 +61,7 @@ const MangaDetailPage = ({ manga }: { manga: MangaInfoResponse }) => {
                 {manga?.title}
               </span>
               <div className="flex flex-row items-center [&>*:not(:last-child)]:after:mx-2 [&>*:not(:last-child)]:after:hidden [&>*:not(:last-child)]:after:text-2xl [&>*:not(:last-child)]:after:text-gray-500 [&>*:not(:last-child)]:after:content-['•']">
-                {Boolean(manga.averageScore) && (
+                {Boolean(manga?.averageScore) && (
                   <span className="flex flex-row items-center justify-center gap-1 p-1 text-base font-semibold text-secondary after:text-gray-500 after:content-['.']">
                     <Icon
                       className="text-warning"

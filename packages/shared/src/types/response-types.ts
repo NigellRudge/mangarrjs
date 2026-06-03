@@ -3,7 +3,7 @@ export enum MangaStatus {
   finished = "finished",
   canceled = "canceled",
   hiatus = "hiatus",
-  upcoming = "hiatus",
+  upcoming = "upcoming",
 }
 
 export type MangaSourceType = "manga-dex" | "manga-pill" | "ani-list";
@@ -27,6 +27,12 @@ export type MangaResponse = ListItem & {
   sourceId: MangaSourceType;
   bannerImage?: string;
   description?: string;
+  otherImages?: {
+    sourceId: MangaSourceType;
+    url: string;
+  }[];
+  otherIds?: Record<string, string>;
+  publishYear?: string;
 };
 
 export type MangaInfoResponse = {
@@ -61,4 +67,10 @@ export type MangaSourceGenre = {
   id: string;
   name: string;
   sourceId: string;
+};
+
+export type MangaGenreResponse = {
+  id: string;
+  name: string;
+  sourceIds: Record<string, string>;
 };

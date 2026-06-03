@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@/components/shared/Icon";
 import { useCallback, useState } from "react";
 import { copyToClipboard } from "@/utils/shared";
 import MultiSelect from "@/components/inputs/MultiSelect";

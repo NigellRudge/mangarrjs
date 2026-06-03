@@ -1,7 +1,12 @@
 import { DataSource } from "typeorm";
 import User from "@database/entities/user";
 import RefreshToken from "@database/entities/refresh-token";
-import { createClient, RedisClientType } from "redis";
+import {
+  createClient,
+  RedisClientType,
+  SocketTimeoutError,
+  ConnectionTimeoutError,
+} from "redis";
 import { LRUCache } from "lru-cache";
 
 export let databaseInstance: DataSource;
@@ -17,7 +22,6 @@ export async function initDB() {
     logging: false,
   });
 
-  console.log('reds',process.env.REDIS_URL)
   try {
     databaseInstance = await databaseInstance.initialize();
   } catch (error) {
@@ -28,11 +32,30 @@ export async function initDB() {
 export async function initRedis() {
   redisClient = createClient({
     url: process.env.REDIS_URL,
+    socket: {
+      reconnectStrategy: (retries, cause: any) => {
+        const limit = parseInt(process.env.REDIS_RETRY_LIMIT || "1");
+        if (retries > limit) {
+          console.log("redis retry limit exceeded");
+          return false;
+        }
+        if (
+          ["ECONNREFUSED", "ENOTFOUND", "EHOSTUNREACH"].includes(cause?.code)
+        ) {
+          console.log("❌ Fatal Redis connection error");
+          return false;
+        }
+
+        const jitter = Math.floor(Math.random() * 200);
+        const delay = Math.min(Math.pow(2, retries) * 50, 2000);
+        return delay + jitter;
+      },
+    },
   });
 
   try {
     redisClient.on("error", (error) => {
-      console.log(error);
+      console.error("Redis error:", error);
     });
 
     redisClient.on("connect", () => {

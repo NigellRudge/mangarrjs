@@ -7,7 +7,7 @@ import {
   ChapterResponse,
   MangaInfoResponse,
   MangaResponse,
-} from "../../reponse-types";
+} from "../../response-types";
 
 export class MangaPillDTO {
   public static getMangaIdFromUrl(mangaUrl?: string): string | null {

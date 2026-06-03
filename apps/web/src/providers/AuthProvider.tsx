@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import EmptyLayout from "@/layouts/EmptyLayout";
 import LoginPage from "@/components/pages/LoginPage";
 import { backendClient, isTokenValid } from "@/http/api-client";
 
@@ -98,9 +97,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       <AuthContext.Provider
         value={{ login, logout, isLoggedIn, isAuthLoading, user }}
       >
-        <EmptyLayout>
+        <div className="w-screen h-screen">
           <LoginPage />
-        </EmptyLayout>
+        </div>
       </AuthContext.Provider>
     );
   }

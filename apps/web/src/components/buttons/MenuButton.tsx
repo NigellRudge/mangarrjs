@@ -1,20 +1,15 @@
 import { useNavigationState } from "@/providers/NavigationStateProvider";
-import Icon from "@/components/Icon";
+import Icon from "@/components/shared/Icon";
 
 const MenuButton = () => {
-  const { isSideBarCollapsed, setIsSideBarCollapsed } = useNavigationState();
+  const { setIsSideBarCollapsed } = useNavigationState();
   return (
     <div className="lg:hidden flex">
       <button
-        onClick={() => setIsSideBarCollapsed((prev) => !prev)}
-        className="btn btn-square flex align-center justify-center"
+        onClick={() => setIsSideBarCollapsed(false)}
+        className="flex align-center justify-center p-2 btn btn-link"
       >
-        <Icon
-          name={isSideBarCollapsed ? "hamburger" : "close"}
-          className="text-gray-200"
-          width={32}
-          height={32}
-        />
+        <Icon name="hamburger" className="text-gray-200" size={30} />
       </button>
     </div>
   );

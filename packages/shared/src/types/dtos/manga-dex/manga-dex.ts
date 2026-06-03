@@ -1,4 +1,4 @@
-import { MangaStatus } from "../../reponse-types";
+import { MangaStatus } from "../../response-types";
 
 export interface MangaDexResponse<T> {
   result: "ok" | "error";

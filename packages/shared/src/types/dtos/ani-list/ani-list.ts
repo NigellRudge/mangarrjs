@@ -1,8 +1,10 @@
 export interface GenreResult {
-  Page: {
-    media: {
-      genres: string[];
-    }[];
+  data: {
+    Page: {
+      media: {
+        genres: string[];
+      }[];
+    };
   };
 }
 

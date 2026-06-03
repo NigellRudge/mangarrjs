@@ -1,87 +1,126 @@
 import { Request } from "express";
 import url from "url";
+import slug from "slug";
 import * as queryString from "node:querystring";
-import {MangaSourceType} from "../types/reponse-types";
-import {HEADER_CONTENT_TYPES, HeaderImageContentType, SearchFilters} from "../types/search-filters";
+import { MangaSourceType } from "../types/response-types";
+import {
+  DiscoverFilters,
+  HEADER_CONTENT_TYPES,
+  HeaderImageContentType,
+  SearchFilters,
+  SortFilter,
+} from "../types/search-filters";
 
 export const getRequestParams = (
-    request: Request,
-    key: string,
-    type: "number" | "string" | "array",
+  request: Request,
+  key: string,
+  type: "number" | "string" | "array",
 ) => {
-    if (!request) return null;
-    if (type === "array") {
-        return request.params[key];
-    }
-    const paramValue = Array.isArray(request.params[key])
-        ? request.params[key][0]
-        : request.params[key];
+  if (!request) return null;
+  if (type === "array") {
+    return request.params[key];
+  }
+  const paramValue = Array.isArray(request.params[key])
+    ? request.params[key][0]
+    : request.params[key];
 
-    if (type === "number") {
-        return parseInt(paramValue);
-    }
+  if (type === "number") {
+    return parseInt(paramValue);
+  }
 
-    return paramValue;
+  return paramValue;
 };
 
 export const getRequestQuery = (
-    request: Request,
-    key: string,
-    type: "number" | "string" | "array",
+  request: Request,
+  key: string,
+  type: "number" | "string" | "array",
 ) => {
-    if (!request) return null;
-    const parsedQuery = url.parse(request.url, true);
-    if (type === "array") {
-        const items = Array.isArray(parsedQuery.query[key])
-            ? parsedQuery.query[key]
-            : [parsedQuery.query[key]];
-        return items.filter(Boolean);
-    }
-    const paramValue = Array.isArray(parsedQuery.query[key])
-        ? parsedQuery.query[key][0]
-        : parsedQuery.query[key];
+  if (!request) return null;
+  const parsedQuery = url.parse(request.url, true);
+  if (type === "array") {
+    const items = Array.isArray(parsedQuery.query[key])
+      ? parsedQuery.query[key]
+      : [parsedQuery.query[key]];
+    return items.filter(Boolean);
+  }
+  const paramValue = Array.isArray(parsedQuery.query[key])
+    ? parsedQuery.query[key][0]
+    : parsedQuery.query[key];
 
-    if (
-        type === "number" &&
-        Boolean(paramValue) &&
-        typeof paramValue === "string"
-    ) {
-        return parseInt(paramValue);
-    }
+  if (
+    type === "number" &&
+    Boolean(paramValue) &&
+    typeof paramValue === "string"
+  ) {
+    return parseInt(paramValue);
+  }
 
-    return paramValue;
+  return paramValue;
 };
 
 export const createQueryParams = (queryParameters?: Record<string, any>) => {
-    if (!queryParameters) {
-        return "";
-    }
-    return queryString.stringify(queryParameters);
+  if (!queryParameters) {
+    return "";
+  }
+  return queryString.stringify(queryParameters);
 };
 
 export const getSearchFilters = (req: Request): SearchFilters => {
-    const sourceId = getRequestQuery(req, "source", "string") as MangaSourceType;
-    const page = (getRequestQuery(req, "page", "number") as number) || 1;
-    const pageSize = (getRequestQuery(req, "pageSize", "number") as number) || 25;
-    const genres = (getRequestQuery(req, "genres", "array") as string[]) || [];
+  const sourceId = getRequestQuery(req, "source", "string") as MangaSourceType;
+  const page = (getRequestQuery(req, "page", "number") as number) || 1;
+  const pageSize = (getRequestQuery(req, "pageSize", "number") as number) || 25;
+  const genres = (getRequestQuery(req, "genres", "array") as string[]) || [];
 
-    return {
-        sourceId,
-        page,
-        genres,
-        pageSize,
-    };
+  return {
+    sourceId,
+    page,
+    genres,
+    pageSize,
+  };
 };
 
 export const getHeaderContentType = (req: Request): HeaderImageContentType => {
-    const accept = req.headers["accept"];
-    if (typeof accept === "string") {
-        if (accept.includes(HEADER_CONTENT_TYPES.AVIF)) {
-            return HEADER_CONTENT_TYPES.AVIF;
-        }
-        if (accept.includes(HEADER_CONTENT_TYPES.WEBP)) {
-            return HEADER_CONTENT_TYPES.WEBP;
-        }
+  const accept = req.headers["accept"];
+  if (typeof accept === "string") {
+    if (accept.includes(HEADER_CONTENT_TYPES.AVIF)) {
+      return HEADER_CONTENT_TYPES.AVIF;
     }
-    return HEADER_CONTENT_TYPES.JPG;
+    if (accept.includes(HEADER_CONTENT_TYPES.WEBP)) {
+      return HEADER_CONTENT_TYPES.WEBP;
+    }
+  }
+  return HEADER_CONTENT_TYPES.JPG;
+};
+
+export const getDiscoverFilterFromRequest = (req: Request): DiscoverFilters => {
+  if (!req) {
+    return {
+      page: 1,
+      pageSize: 25,
+      genres: [],
+    };
+  }
+  const page = (getRequestQuery(req, "page", "number") as number) || 1;
+  const pageSize = (getRequestQuery(req, "pageSize", "number") as number) || 25;
+  const genres = (getRequestQuery(req, "genres", "array") as string[]) || [];
+  const sources = getRequestQuery(req, "sources", "array") as MangaSourceType[];
+  const mediaTypes = getRequestQuery(req, "mediaTypes", "array") as string[];
+  const statusTypes = getRequestQuery(req, "statusTypes", "array") as string[];
+  const sort = getRequestQuery(req, "sort", "string") as SortFilter;
+
+  return {
+    page,
+    pageSize,
+    genres,
+    sources,
+    mediaTypes,
+    statusTypes,
+    sort,
+  };
+};
+
+export const slugifyTitle = (title: string) => {
+  if (!title) return "";
+  return slug(title, { lower: true, replacement: "-", symbols: true });
 };

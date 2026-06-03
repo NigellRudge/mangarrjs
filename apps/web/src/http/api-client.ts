@@ -3,7 +3,11 @@ import * as querystring from "node:querystring";
 import "dotenv/config";
 import { jwtDecode } from "jwt-decode";
 import { getFromLocalStorage, setInLocalStorage } from "@/utils/local-storage";
-import { MangaResponse, MangaSourceType } from "@mangarr/shared";
+import {
+  DiscoverFilters,
+  MangaResponse,
+  MangaSourceType,
+} from "@mangarr/shared";
 
 export const isTokenValid = (token?: string) => {
   if (!token) return false;
@@ -162,6 +166,46 @@ class ApiClient {
         return response.data;
       }
       return null;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+  discover = async (
+    filters: DiscoverFilters = {
+      page: 1,
+      pageSize: 20,
+      genres: [],
+      sources: "all",
+    },
+  ) => {
+    try {
+      const response = await this.client.get(
+        `discover/search?${querystring.stringify(filters)}`,
+        {
+          withCredentials: true,
+          headers: {
+            authorization: getAuthToken(),
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+  discoverFacets = async () => {
+    try {
+      const response = await this.client.get(`discover/facets`, {
+        withCredentials: true,
+        headers: {
+          authorization: getAuthToken(),
+        },
+      });
+      return response.data;
     } catch (error) {
       console.log(error);
       return null;

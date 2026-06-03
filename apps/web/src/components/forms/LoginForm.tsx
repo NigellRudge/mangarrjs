@@ -2,7 +2,7 @@ import { Formik, Form } from "formik";
 import { object, string } from "yup";
 
 import useAuth from "@/hooks/useAuth";
-import Icon from "@/components/Icon";
+import Icon from "@/components/shared/Icon";
 
 const LoginForm = () => {
   const { login, authError } = useAuth();
@@ -45,7 +45,7 @@ const LoginForm = () => {
                     value={values.email}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    className={`w-full bg-transparent text-lg font-medium placeholder-gray-500 ${hasEmailError ? "text-red-400" : "text-gray-200"} text-gray-200`}
+                    className={`w-full bg-transparent text-base font-medium placeholder-gray-500 ${hasEmailError ? "text-red-400" : "text-gray-200"} text-gray-200`}
                   />
                 </label>
 
@@ -64,7 +64,7 @@ const LoginForm = () => {
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    className={`w-full bg-transparent placeholder-gray-500 ${hasPasswordError ? "text-red-400" : "text-gray-200"} text-lg font-medium`}
+                    className={`w-full bg-transparent placeholder-gray-500 ${hasPasswordError ? "text-red-400" : "text-gray-200"} text-base font-medium`}
                   />
                 </label>
               </div>

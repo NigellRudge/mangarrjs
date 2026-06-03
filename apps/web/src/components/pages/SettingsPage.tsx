@@ -1,7 +1,7 @@
 import { ComponentType, useState } from "react";
-import { IconName } from "@/components/Icon";
+import { IconName } from "@/components/shared/Icon";
 import dynamic from "next/dynamic";
-import TabHeader from "@/components/TabHeader";
+import TabHeader from "@/components/apps/TabHeader";
 
 type SettingRouteType = {
   label: string;

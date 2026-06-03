@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IconName } from "@/components/Icon";
+import { IconName } from "@/components/shared/Icon";
 import { ReactNode } from "react";
 
 const IconWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -24,7 +24,7 @@ const NavigationLink = ({
 }) => (
   <Link
     href={url}
-    className={` flex flex-row gap-1 px-4 py-2 rounded-md ${isActive ? "text-white bg-base-300 border border-gray-400" : "text-gray-400 border-none"} hover:text-white hover:bg-base-300 transition-all duration-200 ease-in-out font-bold m-0`}
+    className={` flex flex-row gap-1 px-4 py-2 rounded-md ${isActive ? "text-white bg-base-300 border border-gray-700" : "text-gray-400 border-none"} hover:text-white hover:bg-base-300 transition-all duration-200 ease-in-out font-bold m-0`}
   >
     {leftIcon && <IconWrapper>{leftIcon}</IconWrapper>}
     <span className={`text-[${textSize}]`}></span>

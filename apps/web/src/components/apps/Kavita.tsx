@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import Icon from "@/components/shared/Icon";
 import { useState } from "react";
 import Image from "next/image";
 import KavitaModal from "@/components/modals/KavitaModal";

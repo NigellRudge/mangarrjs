@@ -1,13 +1,16 @@
 import type { Request, Response } from "express";
 import { GeneralError, NotFoundError } from "@mangarr/shared/errors";
 import SearchService from "@services/search-service";
-import { getRequestQuery, getSearchFilters } from "@mangarr/shared";
+import {
+  getRequestQuery,
+  getSearchFilters,
+  MangaSourceType,
+} from "@mangarr/shared";
 import Injectable from "@decorators//injectable";
 import Controller from "@decorators/controller";
 import { Get } from "@decorators/request-methods";
 import { UseMiddleware } from "@decorators/middleware";
 import { authenticateToken } from "@middleware/auth-middleware";
-import { MangaSourceType } from "@mangaClients/shared/types";
 
 @Injectable()
 @UseMiddleware(authenticateToken)
