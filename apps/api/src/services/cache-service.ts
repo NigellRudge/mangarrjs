@@ -40,7 +40,7 @@ export default class CacheService {
     data: Record<string, any>,
     TTL: number | TTLString = DEFAULT_TTL,
   ) => {
-    if (disableRedis || !this.redisClient?.isReady) return;
+    if (this.skipCache) return;
     const expiration = parseTTL(TTL);
     const result = await this.redisClient.set(redisKey, JSON.stringify(data), {
       EX: expiration,
@@ -49,7 +49,7 @@ export default class CacheService {
   };
 
   get = async (redisKey: string) => {
-    if (disableRedis || !this.redisClient?.isReady) return null;
+    if (this.skipCache) return null;
     const cachedData = await this.redisClient.get(redisKey);
     if (!cachedData) return null;
     return JSON.parse(cachedData!);
@@ -79,4 +79,8 @@ export default class CacheService {
       return null;
     }
   };
+
+  private get skipCache(): boolean {
+    return disableRedis || !this.redisClient?.isReady;
+  }
 }
