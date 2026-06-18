@@ -2,7 +2,7 @@ import useDiscoverManga from "@/hooks/useDiscoverManga";
 import Icon from "@/components/shared/Icon";
 import Select from "react-select";
 import Flyout from "@/components/shared/Flyout";
-import { MangaSourceType } from "@mangarr/shared";
+import MangaSourceFilter from "@/components/filters/MangaSourceFilter";
 
 const ClearFiltersButton = () => {
   const { clearFilters } = useDiscoverManga();
@@ -110,35 +110,6 @@ const StatusFilter = () => {
           updateActiveFiltersForKey(
             "statusTypes",
             Array.from(data.values().map((val) => val.value)),
-          );
-        }}
-      />
-    </div>
-  );
-};
-
-const MangaSourceFilter = () => {
-  const { sources, updateActiveFiltersForKey, activeFilters } =
-    useDiscoverManga();
-  const selected = sources.filter((source) =>
-    activeFilters.sources?.includes(source.value as MangaSourceType),
-  );
-  return (
-    <div className="flex flex-col gap-2 px-2">
-      <h3 className="text-gray-200 text-lg">MangaSources</h3>
-      <Select
-        className="react-select-container"
-        classNamePrefix="react-select"
-        options={sources}
-        isMulti
-        value={selected}
-        placeholder="Select Status"
-        onChange={(data) => {
-          updateActiveFiltersForKey(
-            "sources",
-            Array.from(
-              data.values().map((val) => val.value as MangaSourceType),
-            ),
           );
         }}
       />
