@@ -20,17 +20,19 @@ export type ListItem = {
   sourceId: MangaSourceType;
 };
 
-export type MangaResponse = ListItem & {
-  id: string | number;
-  title: string;
-  coverImage: string;
+export type MangaMedia = {
+  url: string;
   sourceId: MangaSourceType;
+  type: "cover" | "banner";
+};
+
+export type MangaResponse = {
+  id: string | number;
+  sourceId: MangaSourceType;
+  title: string;
+  media: Array<MangaMedia>;
   bannerImage?: string;
   description?: string;
-  otherImages?: {
-    sourceId: MangaSourceType;
-    url: string;
-  }[];
   otherIds?: Record<string, string>;
   publishYear?: string;
 };
@@ -53,24 +55,22 @@ export type MangaInfoResponse = {
 
 export type ChapterResponse = {
   id?: string | number;
-  title: string;
-  coverImage: string;
   sourceId: MangaSourceType;
-  mangaId?: string | null;
   chapterNumber?: string;
+  title: string;
+  mangaId?: string | null;
+  description?: string;
   translatedLanguage: string;
   releaseDate?: Date;
-  description?: string;
+  media: Array<{
+    url: string;
+    sourceId: MangaSourceType;
+    type: "cover" | "banner";
+  }>;
 };
 
 export type MangaSourceGenre = {
   id: string;
   name: string;
   sourceId: string;
-};
-
-export type MangaGenreResponse = {
-  id: string;
-  name: string;
-  sourceIds: Record<string, string>;
 };

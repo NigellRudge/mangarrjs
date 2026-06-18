@@ -1,8 +1,46 @@
 import Link from "next/link";
-import { ChapterResponse, joinSafe, MangaResponse } from "@mangarr/shared";
+import {
+  ChapterResponse,
+  getRandomItemFromList,
+  hasItems,
+  joinSafe,
+  MangaMedia,
+  MangaResponse,
+} from "@mangarr/shared";
 import { TypeIndicator } from "@/components/list/shared";
 import BackendImage from "@/components/image/BackendImage";
 import Icon from "@/components/shared/Icon";
+import { useMemo } from "react";
+
+const useMediaCard = (
+  item: MangaResponse | ChapterResponse,
+  type: "manga" | "chapter" = "manga",
+) => {
+  if (!item) return {};
+
+  let titleStyle = "text-md font-extrabold md:text-lg";
+  let title = item.title;
+  if (item.title?.length > 50) {
+    title = item.title?.slice(0, 80) + "....";
+    titleStyle = "text-md font-bold";
+  }
+  const id = type === "manga" ? item.id : (item as ChapterResponse).mangaId;
+  const slug = joinSafe([id, item.sourceId], "_");
+  const image = useMemo(() => {
+    if (!hasItems(item.media)) return null;
+    const filteredList = item.media.filter((media) => media.type === "cover");
+    return getRandomItemFromList<MangaMedia>(filteredList);
+  }, [item]);
+
+  return {
+    image,
+    slug,
+    titleStyle,
+    title,
+    imageUrl: Boolean(image) ? image?.url : "/not-found-cover.png",
+    imageSource: image?.sourceId || null,
+  };
+};
 
 const MonitorMangaButton = ({ onClick }: { onClick: () => void }) => {
   return (
@@ -33,14 +71,11 @@ const MediaCard = ({
   loadEager?: boolean;
   canExpand?: boolean;
 }) => {
-  let titleStyle = "text-md font-extrabold md:text-lg";
-  let title = item.title;
-  if (item.title?.length > 50) {
-    title = item.title?.slice(0, 80) + "....";
-    titleStyle = "text-md font-bold";
-  }
-  const id = type === "manga" ? item.id : (item as ChapterResponse).mangaId;
-  const slug = joinSafe([id, item.sourceId], "_");
+  const { slug, title, titleStyle, imageSource, imageUrl } = useMediaCard(
+    item,
+    type,
+  );
+  if (!item) return null;
 
   return (
     <Link href={`/manga/${slug}`} className="relative">
@@ -53,10 +88,10 @@ const MediaCard = ({
             fill
             loading={loadEager ? "eager" : "lazy"}
             className="h-full w-full object-cover inset-0"
-            src={item?.coverImage}
-            alt={item?.coverImage}
+            src={imageUrl!}
+            alt={imageUrl!}
             sizes="(min-width: 768px) 20vw,(min-width: 1025px) 15vw, 40vw"
-            source={item.sourceId}
+            source={imageSource!}
           />
         </div>
 

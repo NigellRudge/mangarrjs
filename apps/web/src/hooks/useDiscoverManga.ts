@@ -47,7 +47,12 @@ const useDiscoverManga = () => {
   const numberOfActiveFilters = useMemo(() => {
     if (!activeFilters) return 0;
     const actualFilters =
-      removeEmptyKeys({ ...activeFilters, page: null, sort: null }) || {};
+      removeEmptyKeys({
+        ...activeFilters,
+        page: null,
+        pageSize: null,
+        sort: null,
+      }) || {};
     return Object.keys(actualFilters).length;
   }, [activeFilters]);
 

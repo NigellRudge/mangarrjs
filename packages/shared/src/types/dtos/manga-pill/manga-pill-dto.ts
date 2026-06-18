@@ -27,8 +27,9 @@ export class MangaPillDTO {
     return {
       id: manga.id,
       title: manga.name,
-      coverImage: manga.coverImage,
+      media: [{ url: manga.coverImage, type: "cover", sourceId: "manga-pill" }],
       sourceId: "manga-pill",
+      otherIds: {},
     };
   }
 
@@ -39,7 +40,9 @@ export class MangaPillDTO {
       title: chapter.name,
       mangaId: this.getMangaIdFromUrl(chapter.mangaUrl),
       chapterNumber: chapter.chapterNumber,
-      coverImage: chapter.coverImage,
+      media: [
+        { url: chapter.coverImage, sourceId: "manga-pill", type: "cover" },
+      ],
       translatedLanguage: "en",
       sourceId: "manga-pill",
     };

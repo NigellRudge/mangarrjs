@@ -103,7 +103,13 @@ export class MangaDexDTO {
       title,
       id,
       sourceId: "manga-dex",
-      coverImage: MangaDexDTO.getCoverFileName(manga),
+      media: [
+        {
+          url: MangaDexDTO.getCoverFileName(manga),
+          sourceId: "manga-dex",
+          type: "cover",
+        },
+      ],
     };
   }
 
@@ -127,7 +133,13 @@ export class MangaDexDTO {
       title: joinSafe([title, chapterNumber], ": #"),
       chapterNumber,
       releaseDate: new Date(publishAt),
-      coverImage: coverImage || "",
+      media: [
+        {
+          url: coverImage || "",
+          sourceId: "manga-dex",
+          type: "cover",
+        },
+      ],
       mangaId: manga?.id,
       translatedLanguage,
       sourceId: "manga-dex",

@@ -1,9 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import useSWR from "swr";
 import { backendClient } from "@/http/api-client";
 import useBrowserBreakpoints from "@/hooks/useBrowserBreakpoints";
-import { hasItems, MangaResponse } from "@mangarr/shared";
+import {
+  getRandomItemFromList,
+  hasItems,
+  MangaMedia,
+  MangaResponse,
+} from "@mangarr/shared";
+import BackendImage from "@/components/image/BackendImage";
 
 const DELAY = 8000;
 
@@ -15,19 +21,31 @@ const Slide = ({
   slide: MangaResponse;
   isActive: boolean;
   isMobile?: boolean;
-}) => (
-  <div
-    className={`fixed inset-0 z-[1] transition-opacity ease-in-out duration-1000 ${isActive ? "opacity-100" : "opacity-0"}`}
-  >
-    <Image
-      fill
-      sizes="100vw"
-      src={(isMobile ? slide.coverImage : slide.bannerImage) || ""}
-      alt={(isMobile ? slide.coverImage : slide.bannerImage) || ""}
-      className={`object-cover  ${isMobile ? "object-top" : "object-center"}`}
-    />
-  </div>
-);
+}) => {
+  const media = useMemo(() => {
+    const covers = slide.media.filter((media) => media.type === "cover");
+    const banners = slide.media.filter((media) => media.type === "banner");
+    const selectedMedia = isMobile ? covers : banners;
+    return getRandomItemFromList<MangaMedia>(selectedMedia);
+  }, []);
+
+  if (!media) return null;
+
+  return (
+    <div
+      className={`fixed inset-0 z-[1] transition-opacity ease-in-out duration-1000 ${isActive ? "opacity-100" : "opacity-0"}`}
+    >
+      <BackendImage
+        fill
+        sizes="100vw"
+        src={media.url}
+        alt={media.url}
+        source={media.sourceId}
+        className={`object-cover  ${isMobile ? "object-top" : "object-center"}`}
+      />
+    </div>
+  );
+};
 
 const Carousel = () => {
   const { isMobileBreakpoint, isSmallBreakpoint } = useBrowserBreakpoints();

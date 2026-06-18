@@ -8,6 +8,7 @@ import {
   MangaInfoResponse,
   MangaResponse,
   MangaSourceGenre,
+  MangaSourceType,
   MangaStatus,
 } from "../../response-types";
 import { hasItems, joinSafe } from "../../../utils/list";
@@ -19,19 +20,31 @@ export class AniListDTO {
     index?: number,
     selectLargestImage?: boolean,
   ): MangaResponse {
+    const coverImage = selectLargestImage
+      ? manga.coverImage.large ||
+        manga.coverImage.color ||
+        manga.coverImage.medium ||
+        ""
+      : manga.coverImage.color ||
+        manga.coverImage.large ||
+        manga.coverImage.medium ||
+        "";
+    const media: Array<{
+      url: string;
+      sourceId: MangaSourceType;
+      type: "cover" | "banner";
+    }> = [{ url: coverImage, sourceId: "ani-list", type: "cover" }];
+    if (Boolean(manga.bannerImage)) {
+      media.push({
+        url: manga.bannerImage!,
+        type: "banner",
+        sourceId: "ani-list",
+      });
+    }
     return {
       id: manga.id,
       title: manga.title.english || manga.title.romaji,
-      coverImage: selectLargestImage
-        ? manga.coverImage.large ||
-          manga.coverImage.color ||
-          manga.coverImage.medium ||
-          ""
-        : manga.coverImage.color ||
-          manga.coverImage.large ||
-          manga.coverImage.medium ||
-          "",
-      bannerImage: manga.bannerImage || manga.coverImage.large,
+      media,
       sourceId: "ani-list",
     };
   }

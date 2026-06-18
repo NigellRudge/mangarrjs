@@ -78,7 +78,7 @@ const LoginForm = () => {
 
               <div className="flex w-full ">
                 <button
-                  type="button"
+                  type="submit"
                   disabled={isSubmitting}
                   onClick={() => submitForm()}
                   className="h-12 text-gray-800 btn btn-primary w-full text-lg rounded-md border font-semibold"

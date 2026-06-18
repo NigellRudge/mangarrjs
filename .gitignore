@@ -25,6 +25,7 @@ coverage/
 
 apps/web/.next/
 apps/web/out/
+apps/web/next-env.d.ts
 apps/api/dist/
 apps/api/**.db
 packages/shared/dist/

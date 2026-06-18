@@ -9,7 +9,7 @@ import AnilistApiClient from "@mangaClients/ani-list";
 import { MangaResponse, MangaSourceType } from "@mangarr/shared/";
 import MangaSourceClient from "@mangarr/shared/http";
 import { iocContainer } from "@iocContainer/ioc-container";
-import { pipe, uniqBy, flatten } from "ramda";
+import { pipe, uniqBy, flatten, concat } from "ramda";
 import { normalizeWordsForSources } from "@mangarr/shared/synonyms";
 import { sortArrayBySortOrder } from "@mangarr/shared/sorting";
 
@@ -109,20 +109,13 @@ export default class DiscoverService {
       for (const manga of results) {
         const mapKey = slugifyTitle(manga.title);
         const oldManga = map.get(mapKey);
-        if (!oldManga) {
-          map.set(mapKey, manga);
-          continue;
-        }
-        const mangaKeySource = key as MangaSourceType;
-        const otherImages = oldManga.otherImages || [];
+        const mangaInfo = oldManga || manga;
 
         const mergedManga = {
-          ...oldManga,
-          otherImages: [
-            ...otherImages,
-            { sourceId: mangaKeySource, url: manga.coverImage },
-          ],
+          ...mangaInfo,
+          media: concat(oldManga?.media || [], manga.media),
           otherIds: {
+            ...mangaInfo.otherIds,
             [key]: manga.id.toString(),
           },
         };
