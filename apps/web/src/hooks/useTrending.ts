@@ -1,6 +1,6 @@
 import { ChapterResponse, MangaResponse } from "@mangarr/shared";
 import useSWR from "swr";
-import { backendClient } from "@/http/api-client";
+import { searchClient } from "@/http/search-client";
 
 const useTrending = (): {
   trendingMangas: MangaResponse[] | ChapterResponse[];
@@ -9,7 +9,7 @@ const useTrending = (): {
 } => {
   const { data: trendingMangas = [], isValidating: isLoading } = useSWR(
     "new-chapters",
-    () => backendClient.getTrendingManga(),
+    () => searchClient.getTrendingManga(),
     { revalidateOnFocus: false },
   );
 

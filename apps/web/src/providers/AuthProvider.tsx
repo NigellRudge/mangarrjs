@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import LoginPage from "@/components/pages/LoginPage";
-import { backendClient, isTokenValid } from "@/http/api-client";
+import { authClient, isTokenValid } from "@/http/auth-client";
 
 type AuthState = {
   isLoggedIn: boolean;
@@ -30,7 +30,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
       setIsAuthLoading(true);
-      const response = await backendClient.login({ email, password });
+      const response = await authClient.login({ email, password });
       if (!response) {
         throw new Error("Login failed.");
       }
@@ -48,7 +48,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     try {
       setIsAuthLoading(true);
-      await backendClient.logout();
+      await authClient.logout();
     } catch (error) {
       console.error(error);
     } finally {
@@ -60,7 +60,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const refreshAuth = async () => {
     try {
-      const response = await backendClient.refresh();
+      const response = await authClient.refresh();
       if (!response) {
         throw new Error("Refresh Auth failed");
       }

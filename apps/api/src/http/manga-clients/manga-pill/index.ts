@@ -305,6 +305,55 @@ export default class MangaPillClient extends MangaSourceClient {
       .map(MangaPillDTO.createMangaResponse);
   }
 
+  public async getTrendingMangas(): Promise<MangaResponse[]> {
+    await this.loadParser("/");
+
+    return this.documentParser
+      .getElementsBySelector(
+        "body > div:nth-child(5) > div.my-3.grid.justify-end.gap-3.grid-cols-2.md\\:grid-cols-3.lg\\:grid-cols-5 > div",
+      )
+      .map((_, element) => {
+        try {
+          const imageElement = this.documentParser.getSingleElement(
+            "a",
+            element,
+          );
+          const mangaUrl = this.documentParser
+            .select(imageElement)
+            .attr("href");
+          const coverImage =
+            this.documentParser.getElementAttribute(
+              "img",
+              "data-src",
+              imageElement,
+            ) || "";
+          const name = this.documentParser.getElementText(
+            "div.flex.flex-col.justify-end > a > div:nth-child(1)",
+            element,
+          );
+
+          const translatedName = this.documentParser.getElementText(
+            "div.flex.flex-col.justify-end > a > div:nth-child(2)",
+            element,
+          );
+
+          return {
+            id: MangaPillDTO.getMangaIdFromUrl(mangaUrl),
+            name: name,
+            type: "manga",
+            coverImage,
+            mangaUrl: Boolean(mangaUrl) ? `${BASE_URL}${mangaUrl}` : "",
+          } as MangaPillManga;
+        } catch {
+          return null;
+        }
+      })
+      .toArray()
+      .filter(Boolean)
+      .map(MangaPillDTO.createMangaResponse)
+      .slice(0, 5);
+  }
+
   private mapGenre(element: any): MangaSourceGenre | null {
     const label = this.documentParser.getSingleElement(
       "label > input",

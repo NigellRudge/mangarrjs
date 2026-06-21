@@ -1,8 +1,8 @@
 import { GetServerSideProps } from "next";
 import MangaDetailPage from "@/components/pages/MangaDetailPage";
-import { backendClient } from "@/http/api-client";
 import Layout from "@/layouts/Layout";
 import { MangaInfoResponse, MangaSourceType } from "@mangarr/shared";
+import { searchClient } from "@/http/search-client";
 
 const Page = ({ manga }: { manga: MangaInfoResponse }) => {
   return (
@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   try {
-    const manga = await backendClient.getInfo({
+    const manga = await searchClient.getInfo({
       id,
       source: source as MangaSourceType,
     });

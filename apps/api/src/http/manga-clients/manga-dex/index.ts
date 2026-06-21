@@ -194,6 +194,21 @@ export default class MangaDexClient extends MangaSourceClient {
     return mediaTypes;
   }
 
+  public async getTrendingMangas(): Promise<MangaResponse[]> {
+    const params: Record<string, any> = {
+      limit: 20,
+      includes: ["cover_art"],
+      "order[followedCount]": "desc",
+    };
+    const res = await this.client.get<MangaDexMangaListResponse>(`/manga`, {
+      params,
+    });
+    if (res.status !== 200) {
+      throw new GeneralError("something went wrong!");
+    }
+    return res.data.data.map(MangaDexDTO.createMangaResponse).slice(0, 5);
+  }
+
   public async isHealthy(): Promise<Boolean> {
     try {
       const response = await this.client.get("/ping");

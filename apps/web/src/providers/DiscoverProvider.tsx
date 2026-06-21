@@ -12,8 +12,8 @@ import {
   MangaSourceType,
 } from "@mangarr/shared";
 import useSWR from "swr";
-import { backendClient } from "@/http/api-client";
 import useUrlFilters from "@/hooks/useUrlFilters";
+import { searchClient } from "@/http/search-client";
 
 type DiscoverStateType = {
   isFiltersFlyoutOpen?: boolean;
@@ -66,7 +66,7 @@ const DiscoverProvider = ({ children }: { children: ReactNode }) => {
   const cacheKey = JSON.stringify(activeFilters);
 
   const { isValidating: isLoadingMangas } = useSWR(cacheKey, async () => {
-    const response = await backendClient.discover(activeFilters);
+    const response = await searchClient.discover(activeFilters);
     if (Boolean(response) && hasItems(response)) {
       setMangas((prev) => {
         if (activeFilters.page === 1) return [...response];
@@ -80,7 +80,7 @@ const DiscoverProvider = ({ children }: { children: ReactNode }) => {
 
   const { data: facetOptions, isValidating: isLoadingFacets } = useSWR(
     "discover-facets",
-    async () => await backendClient.discoverFacets(),
+    async () => await searchClient.discoverFacets(),
   );
 
   const fetchMore = async () => {

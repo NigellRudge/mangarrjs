@@ -37,6 +37,9 @@
     "./list": {
       "types": "./dist/utils/list.d.ts",
       "default": "./dist/utils/list.js"
+    },    "./cache": {
+      "types": "./dist/utils/cache.d.ts",
+      "default": "./dist/utils/cache.js"
     },
     "./string-utils": {
       "types": "./dist/utils/string-utils.d.ts",
@@ -69,6 +72,10 @@
     "./types/manga-dex": {
       "types": "./dist/types/dtos/manga-dex/manga-dex.d.ts",
       "default": "./dist/types/dtos/manga-dex/manga-dex.js"
+    },
+    "./types/dtos/shared": {
+      "types": "./dist/types/dtos/shared.d.ts",
+      "default": "./dist/types/dtos/shared.js"
     },
     "./types/manga-pill": {
       "types": "./dist/types/dtos/manga-pill/manga-pill.d.ts",

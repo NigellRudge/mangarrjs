@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import { backendClient } from "@/http/api-client";
 import { useState } from "react";
 import { hasItems } from "@mangarr/shared";
+import { searchClient } from "@/http/search-client";
 
 const useSearchGrid = () => {
   const { query, replace, pathname } = useRouter();
@@ -16,7 +16,7 @@ const useSearchGrid = () => {
       ? `search-${searchQuery}-${page}`
       : null;
   const { isValidating: isLoading } = useSWR(cacheKey, async () => {
-    const response = await backendClient.search(searchQuery, page);
+    const response = await searchClient.search(searchQuery, page);
     if (Boolean(response) && hasItems(response)) {
       setResults((prev) => {
         if (page === 1) return [...response];

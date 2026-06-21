@@ -1,6 +1,6 @@
 import useSWR from "swr";
-import { backendClient } from "@/http/api-client";
 import { ChapterResponse, MangaResponse } from "@mangarr/shared";
+import { searchClient } from "@/http/search-client";
 
 const useNewChapters = (): {
   newChapters: MangaResponse[] | ChapterResponse[];
@@ -9,7 +9,7 @@ const useNewChapters = (): {
 } => {
   const { data: newChapters = [], isValidating: isLoading } = useSWR(
     "new-chapters",
-    () => backendClient.getNewChapters(),
+    () => searchClient.getNewChapters(),
     { revalidateOnFocus: false },
   );
 

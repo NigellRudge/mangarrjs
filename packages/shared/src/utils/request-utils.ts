@@ -59,13 +59,6 @@ export const getRequestQuery = (
   return paramValue;
 };
 
-export const createQueryParams = (queryParameters?: Record<string, any>) => {
-  if (!queryParameters) {
-    return "";
-  }
-  return queryString.stringify(queryParameters);
-};
-
 export const getSearchFilters = (req: Request): SearchFilters => {
   const sourceId = getRequestQuery(req, "source", "string") as MangaSourceType;
   const page = (getRequestQuery(req, "page", "number") as number) || 1;

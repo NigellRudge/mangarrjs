@@ -2,12 +2,11 @@ import { Router } from "express";
 import { iocContainer } from "@iocContainer/ioc-container";
 
 import "@controllers/manga-controller";
-import "@controllers/search-controller";
 import "@controllers/auth-controller";
 import "@controllers/user-controller";
 import "@controllers/image-controller";
 import "@controllers/trending-controller";
-import "@controllers/discover-controller";
+import "@controllers/search-controller";
 
 export function registerControllers(app: Router) {
   const controllers = Reflect.getMetadata("controllers", global) || [];

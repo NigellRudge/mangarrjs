@@ -113,8 +113,7 @@ export default class AnilistApiClient extends MangaSourceClient {
     }
     return response.Page.media
       .map((item, index) => AniListDTO.createMangaResponse(item, index, true))
-      .filter((manga) => Boolean(manga.bannerImage))
-      .slice(0, 10);
+      .slice(0, 5);
   }
 
   public async getGenres(): Promise<MangaSourceGenre[]> {

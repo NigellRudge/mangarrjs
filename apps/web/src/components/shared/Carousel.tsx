@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
 import useSWR from "swr";
-import { backendClient } from "@/http/api-client";
 import useBrowserBreakpoints from "@/hooks/useBrowserBreakpoints";
 import {
   getRandomItemFromList,
@@ -10,6 +8,7 @@ import {
   MangaResponse,
 } from "@mangarr/shared";
 import BackendImage from "@/components/image/BackendImage";
+import { searchClient } from "@/http/search-client";
 
 const DELAY = 8000;
 
@@ -54,7 +53,7 @@ const Carousel = () => {
 
   const { data: items = [], isValidating: isLoading } = useSWR<MangaResponse[]>(
     "trending-mangas",
-    () => backendClient.getTrendingManga(),
+    () => searchClient.getTrendingManga(),
     { revalidateOnFocus: false },
   );
 

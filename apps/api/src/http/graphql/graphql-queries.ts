@@ -36,7 +36,7 @@ export const popularMangasQuery = `
 query ($page: Int = 1, $perPage: Int = 10) {
    Page(page:$page, perPage:$perPage) {
   ${PageInfoQuery}
-    media(sort: POPULARITY_DESC, type: MANGA) {
+    media(sort: [TRENDING_DESC, POPULARITY_DESC], type: MANGA) {
         ${MangaQuery}
       }
   }
