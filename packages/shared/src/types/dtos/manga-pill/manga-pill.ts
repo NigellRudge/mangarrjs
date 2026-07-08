@@ -29,5 +29,5 @@ export type MangePillMangaInfo = {
   source: MangaSourceType;
   status: MangaStatus;
   bannerImage?: string;
-  chapters?: number;
+  chapters?: any[];
 };

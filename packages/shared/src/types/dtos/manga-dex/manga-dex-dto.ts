@@ -115,7 +115,8 @@ export class MangaDexDTO {
 
   public static createChapterResponse(
     chapter: MangaDexChapter,
-    index?: number,
+    index: number,
+    callbackFunc: any,
   ): ChapterResponse {
     const {
       attributes: {

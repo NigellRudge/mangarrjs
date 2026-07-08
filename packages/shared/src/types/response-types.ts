@@ -49,7 +49,7 @@ export type MangaInfoResponse = {
   tags?: string[];
   status: MangaStatus;
   description: string;
-  chapters?: number;
+  chapters?: ChapterResponse[];
   averageScore?: number;
 };
 
@@ -60,7 +60,7 @@ export type ChapterResponse = {
   title: string;
   mangaId?: string | null;
   description?: string;
-  translatedLanguage: string;
+  translatedLanguage?: string;
   releaseDate?: Date;
   media: Array<{
     url: string;

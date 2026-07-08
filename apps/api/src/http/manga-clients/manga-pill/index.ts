@@ -218,9 +218,25 @@ export default class MangaPillClient extends MangaSourceClient {
       })
       .toArray();
 
-    const chapters = this.documentParser.getElementsBySelector(
+    const chaptersElements = this.documentParser.getElementsBySelector(
       "div#chapters > div.my-3.grid.grid-cols-1.md\\:grid-cols-3.lg\\:grid-cols-6 > a ",
-    ).length;
+    );
+
+    const chapters = chaptersElements
+      .map((_, element) => {
+        const chapterString = this.documentParser.select(element).text();
+        const chapterNumber = chapterString.replace(/\D/g, "");
+
+        return {
+          id: chapterNumber,
+          chapterNumber,
+          title: `${title} Chapter: ${chapterNumber}`,
+          sourceId: "manga-pill",
+          mangaId: id,
+          media: [{ type: "cover", url: coverImage, sourceId: "manga-pill" }],
+        } as ChapterResponse;
+      })
+      .toArray();
 
     return MangaPillDTO.createInfoResponse({
       id: id as string,

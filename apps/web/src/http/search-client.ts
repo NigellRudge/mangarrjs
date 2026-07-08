@@ -1,6 +1,7 @@
 import querystring from "node:querystring";
 import {
   DiscoverFilters,
+  MangaInfoResponse,
   MangaResponse,
   MangaSourceType,
 } from "@mangarr/shared";
@@ -21,6 +22,12 @@ class SearchClient extends BackendClient {
     source: "manga-pill" | "manga-dex" = "manga-dex",
   ) => {
     try {
+      const storageKey = JSON.stringify({ query, page });
+      const storedData =
+        this.localStorageClient.get<MangaResponse[]>(storageKey);
+      if (storedData) {
+        return storedData;
+      }
       const response = await this.client.get(
         `search?${querystring.stringify({ query, page, source })}`,
         {
@@ -30,7 +37,15 @@ class SearchClient extends BackendClient {
           },
         },
       );
-      return response.data;
+      if (response.status === 200) {
+        this.localStorageClient.set<MangaResponse[]>(
+          storageKey,
+          response.data,
+          "1m",
+        );
+        return response.data;
+      }
+      return null;
     } catch (error) {
       console.log(error);
       return null;
@@ -50,7 +65,7 @@ class SearchClient extends BackendClient {
         this.localStorageClient.set<MangaResponse[]>(
           storageKey,
           response.data,
-          "1M",
+          "2D",
         );
         return response.data;
       }
@@ -79,7 +94,13 @@ class SearchClient extends BackendClient {
     }
   };
 
-  getInfo = async ({ id, source }: { id: string; source: MangaSourceType }) => {
+  getInfo = async ({
+    id,
+    source,
+  }: {
+    id: string;
+    source: MangaSourceType;
+  }): Promise<MangaInfoResponse | null> => {
     try {
       const response = await this.client.get(`manga/${id}`, {
         withCredentials: true,
@@ -90,6 +111,7 @@ class SearchClient extends BackendClient {
       if (response.status === 200) {
         return response.data;
       }
+      console.log({ response });
       return null;
     } catch (error) {
       console.log(error);

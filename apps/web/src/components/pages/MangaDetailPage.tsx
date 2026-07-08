@@ -2,7 +2,7 @@ import MonitorButton from "@/components/buttons/MonitorButton";
 import Icon from "@/components/shared/Icon";
 import BackButton from "@/components/buttons/BackButton";
 import BackendImage from "@/components/image/BackendImage";
-import { hasItems, MangaInfoResponse } from "@mangarr/shared";
+import { ChapterResponse, hasItems, MangaInfoResponse } from "@mangarr/shared";
 
 const Genres = ({ genres }: { genres?: string[] }) => (
   <div className="mt-2 flex flex-row flex-wrap items-center gap-2 md:items-start">
@@ -29,6 +29,28 @@ const Tags = ({ tags }: { tags?: string[] }) => (
     ))}
   </div>
 );
+
+const ChaptersContainer = ({ chapters }: { chapters?: ChapterResponse[] }) => {
+  if (!hasItems(chapters)) return null;
+
+  return (
+    <div className="flex flex-col gap-4 mt-4">
+      <div className="border-b border-gray-600 pb-2 ">
+        <h3 className="text-xl font-semibold text-gray-300">Chapters</h3>
+      </div>
+      <ul className="grid gri-col-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+        {chapters?.map((chapter) => (
+          <li
+            key={chapter.id}
+            className="flex cursor-pointer hover:bg-primary transition-colors ease-in-out duration-300 flex-col gap-2 border border-gray-600 rounded-md items-center justify-between text-center p-2"
+          >
+            {chapter.title}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 const MangaDetailPage = ({ manga }: { manga: MangaInfoResponse }) => {
   return (
@@ -73,7 +95,7 @@ const MangaDetailPage = ({ manga }: { manga: MangaInfoResponse }) => {
                   </span>
                 )}
                 <span className="flex flex-row items-center justify-center p-1 text-sm font-semibold text-gray-300 md:text-base">
-                  {manga?.chapters} Chapters
+                  {manga?.chapters?.length} Chapters
                 </span>
                 <span className="flex flex-row items-center justify-center p-1 text-sm font-semibold text-gray-300">
                   Status:
@@ -89,6 +111,8 @@ const MangaDetailPage = ({ manga }: { manga: MangaInfoResponse }) => {
           {hasItems(manga.tags) && <Tags tags={manga?.tags} />}
         </div>
       </div>
+
+      <ChaptersContainer chapters={manga.chapters} />
     </div>
   );
 };

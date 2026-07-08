@@ -59,5 +59,6 @@ export class MangaPillDTO {
     sourceId: manga.source,
     coverImage: manga.coverImage,
     status: manga.status,
+    chapters: manga.chapters,
   });
 }

@@ -4,14 +4,17 @@ import { iocContainer } from "@iocContainer/ioc-container";
 import MangaDexClient from "@mangaClients/manga-dex";
 import MangaPillClient from "@mangaClients/manga-pill";
 import MangaSourceClient from "@mangarr/shared/http";
-import { MangaSourceType } from "@mangarr/shared";
+import { MangaInfoResponse, MangaSourceType } from "@mangarr/shared";
 import AnilistApiClient from "@mangaClients/ani-list";
 
 @Injectable()
 export default class MangaService {
   constructor(private readonly cacheService: CacheService) {}
 
-  public async getInfo(sourceId: MangaSourceType, mangaId: string) {
+  public async getInfo(
+    sourceId: MangaSourceType,
+    mangaId: string,
+  ): Promise<MangaInfoResponse | null> {
     const cacheKey = `getInfo-${sourceId}-${mangaId}`;
     const cachedResponse = await this.cacheService.get(cacheKey);
     if (Boolean(cachedResponse)) {

@@ -16,7 +16,7 @@ export interface MangaDexListResponse<T> {
 }
 
 export type MangaDexMangaListResponse = MangaDexListResponse<MangaDexManga>;
-export type MangaDexChapterListResponse = MangaDexListResponse<MangaDexManga>;
+export type MangaDexChapterListResponse = MangaDexListResponse<MangaDexChapter>;
 export type MangaDexMangaInfoResponse = MangaDexResponse<MangaDexManga>;
 export type MangaDexChapterInfoResponse = MangaDexResponse<MangaDexChapter>;
 

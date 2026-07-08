@@ -19,6 +19,7 @@ import { uniq } from "ramda";
 import { MangaDexDTO } from "@mangarr/shared/dtos";
 import {
   MangaDexChapter,
+  MangaDexChapterListResponse,
   MangaDexListResponse,
   MangaDexMangaInfoResponse,
   MangaDexMangaListResponse,
@@ -153,7 +154,12 @@ export default class MangaDexClient extends MangaSourceClient {
     if (response.status !== 200) {
       throw new NotFoundError(`manga with ID not found: ${mangaId}`);
     }
-    return MangaDexDTO.createMangaInfoResponse(response.data.data);
+    let mangaInfo = MangaDexDTO.createMangaInfoResponse(response.data.data);
+    const chapters = await this.getChapters(mangaId);
+    if (hasItems(chapters)) {
+      mangaInfo = { ...mangaInfo, chapters };
+    }
+    return mangaInfo;
   }
 
   public async getNewChapters(): Promise<ChapterResponse[]> {
@@ -207,6 +213,22 @@ export default class MangaDexClient extends MangaSourceClient {
       throw new GeneralError("something went wrong!");
     }
     return res.data.data.map(MangaDexDTO.createMangaResponse).slice(0, 5);
+  }
+
+  public async getChapters(mangaId: string): Promise<ChapterResponse[]> {
+    const response = await this.client.get<MangaDexChapterListResponse>(
+      `/manga/${mangaId}/feed`,
+      {
+        params: {
+          includes: ["cover_art", "author", "genres", "tags"],
+          translatedLanguage: ["en"],
+        },
+      },
+    );
+    if (response.status !== 200) {
+      throw new NotFoundError(`manga with ID not found: ${mangaId}`);
+    }
+    return response.data.data.map(MangaDexDTO.createChapterResponse);
   }
 
   public async isHealthy(): Promise<Boolean> {
